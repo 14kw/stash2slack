@@ -25,15 +25,15 @@ public class ChatworkPayload {
 
     private String text;
 
-    public boolean isMrkdwn() {
-        return mrkdwn;
+    public String getReqType() {
+        return req_type;
     }
 
-    public void setMrkdwn(boolean mrkdwn) {
-        this.mrkdwn = mrkdwn;
+    public void setReqType(String req_type) {
+        this.req_type  = req_type ;
     }
 
-    private boolean mrkdwn;
+    private String req_type;
 
     public boolean isLinkNames() {
         return link_names;
@@ -44,6 +44,16 @@ public class ChatworkPayload {
     }
 
     private boolean link_names;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    private String comment;
 
     private List<ChatworkAttachment> attachments = new LinkedList<ChatworkAttachment>();
 

@@ -96,14 +96,12 @@ public class RepositoryPushActivityListener {
                 if (isDeleted) {
                     // issue#4: if type is "DELETE" and toHash is all zero then this is a branch delete
                     if (ref.indexOf("refs/tags") >= 0) {
-                        text = String.format("Tag `%s` deleted from repository <%s|`%s`>.",
+                        text = String.format("Tag [%s] deleted from repository `%s`.",
                                 ref.replace("refs/tags/", ""),
-                                repoUrlBuilder.buildAbsolute(),
                                 repoPath);
                     } else {
-                        text = String.format("Branch `%s` deleted from repository <%s|`%s`>.",
+                        text = String.format("Branch [%s] deleted from repository `%s`.",
                                 ref.replace("refs/heads/", ""),
-                                repoUrlBuilder.buildAbsolute(),
                                 repoPath);
                     }
                 } else if (isNewRef) {
@@ -111,20 +109,15 @@ public class RepositoryPushActivityListener {
                     // a new branch or tag, and we want only to display the latest commit, not the entire history
 
                     if (ref.indexOf("refs/tags") >= 0) {
-                        text = String.format("Tag <%s|`%s`> pushed on <%s|`%s`>. See <%s|commit list>.",
-                                url,
+                        text = String.format("Tag [%s] pushed on `%s`.",
                                 ref.replace("refs/tags/", ""),
-                                repoUrlBuilder.buildAbsolute(),
-                                repoPath,
-                                url
+                                repoPath
                                 );
                     } else {
-                        text = String.format("Branch <%s|`%s`> pushed on <%s|`%s`>. See <%s|commit list>.",
-                                url,
+                        text = String.format("Branch [%s] pushed on `%s`.",
                                 ref.replace("refs/heads/", ""),
-                                repoUrlBuilder.buildAbsolute(),
-                                repoPath,
-                                url);
+                                repoPath
+                                );
                     }
                 } else {
                     PageRequest pRequest = new PageRequestImpl(0, PageRequest.MAX_PAGE_LIMIT);
@@ -136,15 +129,13 @@ public class RepositoryPushActivityListener {
                     String commitStr = commitCount == 1 ? "commit" : "commits";
 
                     String branch = ref.replace("refs/heads/", "");
-                    text = String.format("Push on <%s|`%s`> branch <%s|`%s`> by `%s <%s>` (%d %s). See <%s|commit list>.",
-                            repoUrlBuilder.buildAbsolute(),
+                    text = String.format("Push on [%s] branch [%s] \n by `%s %s` (%d %s).",
                             repoPath,
-                            url,
                             branch,
                             event.getUser() != null ? event.getUser().getDisplayName() : "unknown user",
                             event.getUser() != null ? event.getUser().getEmailAddress() : "unknown email",
-                            commitCount, commitStr,
-                            url);
+                            commitCount, commitStr
+                            );
                 }
 
                 // Figure out what type of change this is:
@@ -155,7 +146,7 @@ public class RepositoryPushActivityListener {
                     text = resolvedChatworkSettings.getChatworkIconEmoji() + " " + text;
                 }
                 payload.setText(text);
-                payload.setMrkdwn(true);
+                payload.setReqType("Push");
                 payload.setUsername(resolvedChatworkSettings.getChatworkUsername());
                 payload.setIconUrl(resolvedChatworkSettings.getChatworkIconUrl());
                 payload.setIconEmoji(resolvedChatworkSettings.getChatworkIconEmoji());
@@ -214,8 +205,8 @@ public class RepositoryPushActivityListener {
 
             // Note that we changed this to put everything in one attachment because otherwise it
             // doesn't get collapsed in chatwork (the see more... doesn't appear)
-            commitListBlock.append(String.format("<%s|`%s`>: %s - _%s_\n",
-                    commitUrl, c.getDisplayId(), firstCommitMessageLine, c.getAuthor().getName()));
+            commitListBlock.append(String.format("`%s`: %s - _%s_\n%s\n",
+                    ch.getDisplayId(), firstCommitMessageLine, ch.getAuthor().getName(), commitUrl));
 
             attachmentFallback.append(String.format("%s: %s\n", c.getDisplayId(), firstCommitMessageLine));
         }

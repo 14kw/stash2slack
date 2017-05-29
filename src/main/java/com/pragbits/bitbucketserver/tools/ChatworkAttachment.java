@@ -87,6 +87,14 @@ public class ChatworkAttachment {
         this.title_link = title_link;
     }
 
+    public String getPrType() {
+        return pr_type;
+    }
+
+    public void setPrType(String pr_type) {
+        this.pr_type = pr_type;
+    }
+
     private String title;
     private String title_link;
     private String fallback;
@@ -95,4 +103,5 @@ public class ChatworkAttachment {
     private String text;
     private String author_name;
     private String author_icon;
+    private String pr_type;
 }

@@ -73,6 +73,7 @@ public class PullRequestActivityListener {
 
             String repoName = repository.getSlug();
             String projectName = repository.getProject().getKey();
+            String repoPath = projectName + "/" + repoName;
             long pullRequestId = event.getPullRequest().getId();
             String userName = event.getUser() != null ? event.getUser().getDisplayName() : "unknown user";
             String activity = event.getActivity().getAction().name();
@@ -127,7 +128,7 @@ public class PullRequestActivityListener {
                     .buildAbsolute();
 
             ChatworkPayload payload = new ChatworkPayload();
-            payload.setMrkdwn(true);
+            payload.setReqType("PR");
             payload.setLinkNames(true);
             payload.setUsername(resolvedChatworkSettings.getChatworkUsername());
             payload.setIconUrl(resolvedChatworkSettings.getChatworkIconUrl());
@@ -136,18 +137,17 @@ public class PullRequestActivityListener {
             ChatworkAttachment attachment = new ChatworkAttachment();
             attachment.setAuthorName(userName);
             attachment.setAuthorIcon(avatar);
+            attachment.setTitle(String.format("[%s] #%d: %s",
+                                                  repoPath,
+                                                  event.getPullRequest().getId(),
+                                                  event.getPullRequest().getTitle()));
+            attachment.setTitle_link(url);
+            attachment.setPrType(String.format("%s", event.getActivity().getAction()));
 
             switch (event.getActivity().getAction()) {
                 case OPENED:
-                    attachment.setColor(ColorCode.BLUE.getCode());
-                    attachment.setFallback(String.format("%s opened pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("opened pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("opened pull request #%d",
+                                                            event.getPullRequest().getId()));
 
 
                     if (resolvedLevel == NotificationLevel.COMPACT) {
@@ -160,15 +160,8 @@ public class PullRequestActivityListener {
                     break;
 
                 case REOPENED:
-                    attachment.setColor(ColorCode.BLUE.getCode());
-                    attachment.setFallback(String.format("%s reopened pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("reopened pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("reopened pull request #%d",
+                                                            event.getPullRequest().getId()));
 
                     if (resolvedLevel == NotificationLevel.COMPACT) {
                         this.addField(attachment, "Description", event.getPullRequest().getDescription());
@@ -179,15 +172,8 @@ public class PullRequestActivityListener {
                     break;
 
                 case UPDATED:
-                    attachment.setColor(ColorCode.PURPLE.getCode());
-                    attachment.setFallback(String.format("%s updated pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("updated pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("updated pull request #%d",
+                                                            event.getPullRequest().getId()));
 
                     if (resolvedLevel == NotificationLevel.COMPACT) {
                         this.addField(attachment, "Description", event.getPullRequest().getDescription());
@@ -198,63 +184,28 @@ public class PullRequestActivityListener {
                     break;
 
                 case APPROVED:
-                    attachment.setColor(ColorCode.GREEN.getCode());
-                    attachment.setFallback(String.format("%s approved pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("approved pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("approved pull request #%d",
+                                                            event.getPullRequest().getId()));
                     break;
 
                 case UNAPPROVED:
-                    attachment.setColor(ColorCode.RED.getCode());
-                    attachment.setFallback(String.format("%s unapproved pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("unapproved pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("unapproved pull request #%d",
+                                                            event.getPullRequest().getId()));
                     break;
 
                 case DECLINED:
-                    attachment.setColor(ColorCode.DARK_RED.getCode());
-                    attachment.setFallback(String.format("%s declined pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("declined pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("declined pull request #%d",
+                                                            event.getPullRequest().getId()));
                     break;
 
                 case MERGED:
-                    attachment.setColor(ColorCode.DARK_GREEN.getCode());
-                    attachment.setFallback(String.format("%s merged pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("merged pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("merged pull request #%d",
+                                                            event.getPullRequest().getId()));
                     break;
 
                 case RESCOPED:
-                    attachment.setColor(ColorCode.PURPLE.getCode());
-                    attachment.setFallback(String.format("%s rescoped on pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            url));
-                    attachment.setText(String.format("rescoped on pull request <%s|#%d: %s>",
-                                                            url,
-                                                            event.getPullRequest().getId(),
-                                                            event.getPullRequest().getTitle()));
+                    attachment.setText(String.format("rescoped on pull request #%d",
+                                                            event.getPullRequest().getId()));
                     break;
 
                 case COMMENTED:
@@ -263,23 +214,14 @@ public class PullRequestActivityListener {
                             .comment(comment.getId())
                             .buildAbsolute();
 
-                    attachment.setColor(ColorCode.PALE_BLUE.getCode());
-                    attachment.setFallback(String.format("%s commented on pull request \"%s\". <%s|(open)>",
-                                                            userName,
-                                                            event.getPullRequest().getTitle(),
-                                                            commentUrl));
                     if (resolvedLevel == NotificationLevel.MINIMAL) {
-                        attachment.setText(String.format("commented on pull request <%s|#%d: %s>",
-                                commentUrl,
-                                event.getPullRequest().getId(),
-                                event.getPullRequest().getTitle()));
+                        attachment.setText(String.format("commented on pull request #%d",
+                                event.getPullRequest().getId()));
                     }
                     if (resolvedLevel == NotificationLevel.COMPACT || resolvedLevel == NotificationLevel.VERBOSE) {
-                        attachment.setText(String.format("commented on pull request <%s|#%d: %s>\n%s",
-                                commentUrl,
-                                event.getPullRequest().getId(),
-                                event.getPullRequest().getTitle(),
-                                ((PullRequestCommentActivityEvent) event).getActivity().getComment().getText()));
+                        attachment.setText(String.format("commented on pull request #%d",
+                                event.getPullRequest().getId()));
+                        this.addField(attachment, "Comment", ((PullRequestCommentActivityEvent) event).getActivity().getComment().getText());
                     }
                     break;
             }
@@ -287,7 +229,7 @@ public class PullRequestActivityListener {
             if (resolvedLevel == NotificationLevel.VERBOSE) {
                 ChatworkAttachmentField projectField = new ChatworkAttachmentField();
                 projectField.setTitle("Source");
-                projectField.setValue(String.format("_%s — %s_\n`%s`",
+                projectField.setValue(String.format("%s — [%s:/%s]",
                         event.getPullRequest().getFromRef().getRepository().getProject().getName(),
                         event.getPullRequest().getFromRef().getRepository().getName(),
                         event.getPullRequest().getFromRef().getDisplayId()));
@@ -296,7 +238,7 @@ public class PullRequestActivityListener {
 
                 ChatworkAttachmentField repoField = new ChatworkAttachmentField();
                 repoField.setTitle("Destination");
-                repoField.setValue(String.format("_%s — %s_\n`%s`",
+                repoField.setValue(String.format("%s — [%s:/%s]",
                         event.getPullRequest().getToRef().getRepository().getProject().getName(),
                         event.getPullRequest().getToRef().getRepository().getName(),
                         event.getPullRequest().getToRef().getDisplayId()));
