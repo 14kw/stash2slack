@@ -206,7 +206,7 @@ public class RepositoryPushActivityListener {
             // Note that we changed this to put everything in one attachment because otherwise it
             // doesn't get collapsed in chatwork (the see more... doesn't appear)
             commitListBlock.append(String.format("`%s`: %s - _%s_\n%s\n",
-                    ch.getDisplayId(), firstCommitMessageLine, ch.getAuthor().getName(), commitUrl));
+                    c.getDisplayId(), firstCommitMessageLine, c.getAuthor().getName(), commitUrl));
 
             attachmentFallback.append(String.format("%s: %s\n", c.getDisplayId(), firstCommitMessageLine));
         }
