@@ -1,113 +1,113 @@
 package com.pragbits.bitbucketserver;
 
-public class ImmutableSlackSettings implements SlackSettings {
+public class ImmutableChatworkSettings implements ChatworkSettings {
 
-    private final boolean slackNotificationsOverrideEnabled;
-    private final boolean slackNotificationsEnabled;
-    private final boolean slackNotificationsOpenedEnabled;
-    private final boolean slackNotificationsReopenedEnabled;
-    private final boolean slackNotificationsUpdatedEnabled;
-    private final boolean slackNotificationsApprovedEnabled;
-    private final boolean slackNotificationsUnapprovedEnabled;
-    private final boolean slackNotificationsDeclinedEnabled;
-    private final boolean slackNotificationsMergedEnabled;
-    private final boolean slackNotificationsCommentedEnabled;
-    private final boolean slackNotificationsEnabledForPush;
-    private final boolean slackNotificationsEnabledForPersonal;
+    private final boolean chatworkNotificationsOverrideEnabled;
+    private final boolean chatworkNotificationsEnabled;
+    private final boolean chatworkNotificationsOpenedEnabled;
+    private final boolean chatworkNotificationsReopenedEnabled;
+    private final boolean chatworkNotificationsUpdatedEnabled;
+    private final boolean chatworkNotificationsApprovedEnabled;
+    private final boolean chatworkNotificationsUnapprovedEnabled;
+    private final boolean chatworkNotificationsDeclinedEnabled;
+    private final boolean chatworkNotificationsMergedEnabled;
+    private final boolean chatworkNotificationsCommentedEnabled;
+    private final boolean chatworkNotificationsEnabledForPush;
+    private final boolean chatworkNotificationsEnabledForPersonal;
     private final NotificationLevel notificationLevel;
     private final NotificationLevel notificationPrLevel;
-    private final String slackChannelName;
-    private final String slackWebHookUrl;
-    private final String slackUsername;
-    private final String slackIconUrl;
-    private final String slackIconEmoji;
+    private final String chatworkChannelName;
+    private final String chatworkWebHookUrl;
+    private final String chatworkUsername;
+    private final String chatworkIconUrl;
+    private final String chatworkIconEmoji;
 
 
-    public ImmutableSlackSettings(boolean slackNotificationsOverrideEnabled,
-                                  boolean slackNotificationsEnabled,
-                                  boolean slackNotificationsOpenedEnabled,
-                                  boolean slackNotificationsReopenedEnabled,
-                                  boolean slackNotificationsUpdatedEnabled,
-                                  boolean slackNotificationsApprovedEnabled,
-                                  boolean slackNotificationsUnapprovedEnabled,
-                                  boolean slackNotificationsDeclinedEnabled,
-                                  boolean slackNotificationsMergedEnabled,
-                                  boolean slackNotificationsCommentedEnabled,
-                                  boolean slackNotificationsEnabledForPush,
-                                  boolean slackNotificationsEnabledForPersonal,
+    public ImmutableChatworkSettings(boolean chatworkNotificationsOverrideEnabled,
+                                  boolean chatworkNotificationsEnabled,
+                                  boolean chatworkNotificationsOpenedEnabled,
+                                  boolean chatworkNotificationsReopenedEnabled,
+                                  boolean chatworkNotificationsUpdatedEnabled,
+                                  boolean chatworkNotificationsApprovedEnabled,
+                                  boolean chatworkNotificationsUnapprovedEnabled,
+                                  boolean chatworkNotificationsDeclinedEnabled,
+                                  boolean chatworkNotificationsMergedEnabled,
+                                  boolean chatworkNotificationsCommentedEnabled,
+                                  boolean chatworkNotificationsEnabledForPush,
+                                  boolean chatworkNotificationsEnabledForPersonal,
                                   NotificationLevel notificationLevel,
                                   NotificationLevel notificationPrLevel,
-                                  String slackChannelName,
-                                  String slackWebHookUrl,
-                                  String slackUsername,
-                                  String slackIconUrl,
-                                  String slackIconEmoji) {
-        this.slackNotificationsOverrideEnabled = slackNotificationsOverrideEnabled;
-        this.slackNotificationsEnabled = slackNotificationsEnabled;
-        this.slackNotificationsOpenedEnabled = slackNotificationsOpenedEnabled;
-        this.slackNotificationsReopenedEnabled = slackNotificationsReopenedEnabled;
-        this.slackNotificationsUpdatedEnabled = slackNotificationsUpdatedEnabled;
-        this.slackNotificationsApprovedEnabled = slackNotificationsApprovedEnabled;
-        this.slackNotificationsUnapprovedEnabled = slackNotificationsUnapprovedEnabled;
-        this.slackNotificationsDeclinedEnabled = slackNotificationsDeclinedEnabled;
-        this.slackNotificationsMergedEnabled = slackNotificationsMergedEnabled;
-        this.slackNotificationsCommentedEnabled = slackNotificationsCommentedEnabled;
-        this.slackNotificationsEnabledForPush = slackNotificationsEnabledForPush;
-        this.slackNotificationsEnabledForPersonal = slackNotificationsEnabledForPersonal;
+                                  String chatworkChannelName,
+                                  String chatworkWebHookUrl,
+                                  String chatworkUsername,
+                                  String chatworkIconUrl,
+                                  String chatworkIconEmoji) {
+        this.chatworkNotificationsOverrideEnabled = chatworkNotificationsOverrideEnabled;
+        this.chatworkNotificationsEnabled = chatworkNotificationsEnabled;
+        this.chatworkNotificationsOpenedEnabled = chatworkNotificationsOpenedEnabled;
+        this.chatworkNotificationsReopenedEnabled = chatworkNotificationsReopenedEnabled;
+        this.chatworkNotificationsUpdatedEnabled = chatworkNotificationsUpdatedEnabled;
+        this.chatworkNotificationsApprovedEnabled = chatworkNotificationsApprovedEnabled;
+        this.chatworkNotificationsUnapprovedEnabled = chatworkNotificationsUnapprovedEnabled;
+        this.chatworkNotificationsDeclinedEnabled = chatworkNotificationsDeclinedEnabled;
+        this.chatworkNotificationsMergedEnabled = chatworkNotificationsMergedEnabled;
+        this.chatworkNotificationsCommentedEnabled = chatworkNotificationsCommentedEnabled;
+        this.chatworkNotificationsEnabledForPush = chatworkNotificationsEnabledForPush;
+        this.chatworkNotificationsEnabledForPersonal = chatworkNotificationsEnabledForPersonal;
         this.notificationLevel = notificationLevel;
         this.notificationPrLevel = notificationPrLevel;
-        this.slackChannelName = slackChannelName;
-        this.slackWebHookUrl = slackWebHookUrl;
-        this.slackUsername = slackUsername;
-        this.slackIconUrl = slackIconUrl;
-        this.slackIconEmoji = slackIconEmoji;
+        this.chatworkChannelName = chatworkChannelName;
+        this.chatworkWebHookUrl = chatworkWebHookUrl;
+        this.chatworkUsername = chatworkUsername;
+        this.chatworkIconUrl = chatworkIconUrl;
+        this.chatworkIconEmoji = chatworkIconEmoji;
     }
 
-    public boolean isSlackNotificationsOverrideEnabled() {
-        return slackNotificationsOverrideEnabled;
+    public boolean isChatworkNotificationsOverrideEnabled() {
+        return chatworkNotificationsOverrideEnabled;
     }
 
-    public boolean isSlackNotificationsEnabled() {
-        return slackNotificationsEnabled;
+    public boolean isChatworkNotificationsEnabled() {
+        return chatworkNotificationsEnabled;
     }
 
-    public boolean isSlackNotificationsOpenedEnabled() {
-        return slackNotificationsOpenedEnabled;
+    public boolean isChatworkNotificationsOpenedEnabled() {
+        return chatworkNotificationsOpenedEnabled;
     }
 
-    public boolean isSlackNotificationsReopenedEnabled() {
-        return slackNotificationsReopenedEnabled;
+    public boolean isChatworkNotificationsReopenedEnabled() {
+        return chatworkNotificationsReopenedEnabled;
     }
 
-    public boolean isSlackNotificationsUpdatedEnabled() {
-        return slackNotificationsUpdatedEnabled;
+    public boolean isChatworkNotificationsUpdatedEnabled() {
+        return chatworkNotificationsUpdatedEnabled;
     }
 
-    public boolean isSlackNotificationsApprovedEnabled() {
-        return slackNotificationsApprovedEnabled;
+    public boolean isChatworkNotificationsApprovedEnabled() {
+        return chatworkNotificationsApprovedEnabled;
     }
 
-    public boolean isSlackNotificationsUnapprovedEnabled() {
-        return slackNotificationsUnapprovedEnabled;
+    public boolean isChatworkNotificationsUnapprovedEnabled() {
+        return chatworkNotificationsUnapprovedEnabled;
     }
 
-    public boolean isSlackNotificationsDeclinedEnabled() {
-        return slackNotificationsDeclinedEnabled;
+    public boolean isChatworkNotificationsDeclinedEnabled() {
+        return chatworkNotificationsDeclinedEnabled;
     }
 
-    public boolean isSlackNotificationsMergedEnabled() {
-        return slackNotificationsMergedEnabled;
+    public boolean isChatworkNotificationsMergedEnabled() {
+        return chatworkNotificationsMergedEnabled;
     }
 
-    public boolean isSlackNotificationsCommentedEnabled() {
-        return slackNotificationsCommentedEnabled;
+    public boolean isChatworkNotificationsCommentedEnabled() {
+        return chatworkNotificationsCommentedEnabled;
     }
 
-    public boolean isSlackNotificationsEnabledForPush() {
-        return slackNotificationsEnabledForPush;
+    public boolean isChatworkNotificationsEnabledForPush() {
+        return chatworkNotificationsEnabledForPush;
     }
 
-    public boolean isSlackNotificationsEnabledForPersonal() { return slackNotificationsEnabledForPersonal; }
+    public boolean isChatworkNotificationsEnabledForPersonal() { return chatworkNotificationsEnabledForPersonal; }
 
     public NotificationLevel getNotificationLevel() {
         return notificationLevel;
@@ -117,47 +117,47 @@ public class ImmutableSlackSettings implements SlackSettings {
         return notificationPrLevel;
     }
 
-    public String getSlackChannelName() {
-        return slackChannelName;
+    public String getChatworkChannelName() {
+        return chatworkChannelName;
     }
 
-    public String getSlackWebHookUrl() {
-        return slackWebHookUrl;
+    public String getChatworkWebHookUrl() {
+        return chatworkWebHookUrl;
     }
 
-    public String getSlackUsername() {
-        return slackUsername;
+    public String getChatworkUsername() {
+        return chatworkUsername;
     }
 
-    public String getSlackIconUrl() {
-        return slackIconUrl;
+    public String getChatworkIconUrl() {
+        return chatworkIconUrl;
     }
 
-    public String getSlackIconEmoji() {
-        return slackIconEmoji;
+    public String getChatworkIconEmoji() {
+        return chatworkIconEmoji;
     }
 
     @Override
     public String toString() {
-        return "ImmutableSlackSettings {" + "slackNotificationsOverrideEnabled=" + slackNotificationsOverrideEnabled +
-                ", slackNotificationsEnabled=" + slackNotificationsEnabled +
-                ", slackNotificationsOpenedEnabled=" + slackNotificationsOpenedEnabled +
-                ", slackNotificationsReopenedEnabled=" + slackNotificationsReopenedEnabled +
-                ", slackNotificationsUpdatedEnabled=" + slackNotificationsUpdatedEnabled +
-                ", slackNotificationsApprovedEnabled=" + slackNotificationsApprovedEnabled +
-                ", slackNotificationsUnapprovedEnabled=" + slackNotificationsUnapprovedEnabled +
-                ", slackNotificationsDeclinedEnabled=" + slackNotificationsDeclinedEnabled +
-                ", slackNotificationsMergedEnabled=" + slackNotificationsMergedEnabled +
-                ", slackNotificationsCommentedEnabled=" + slackNotificationsCommentedEnabled +
-                ", slackNotificationsEnabledForPush=" + slackNotificationsEnabledForPush +
-                ", slackNotificationsEnabledForPersonal=" + slackNotificationsEnabledForPersonal +
+        return "ImmutableChatworkSettings {" + "chatworkNotificationsOverrideEnabled=" + chatworkNotificationsOverrideEnabled +
+                ", chatworkNotificationsEnabled=" + chatworkNotificationsEnabled +
+                ", chatworkNotificationsOpenedEnabled=" + chatworkNotificationsOpenedEnabled +
+                ", chatworkNotificationsReopenedEnabled=" + chatworkNotificationsReopenedEnabled +
+                ", chatworkNotificationsUpdatedEnabled=" + chatworkNotificationsUpdatedEnabled +
+                ", chatworkNotificationsApprovedEnabled=" + chatworkNotificationsApprovedEnabled +
+                ", chatworkNotificationsUnapprovedEnabled=" + chatworkNotificationsUnapprovedEnabled +
+                ", chatworkNotificationsDeclinedEnabled=" + chatworkNotificationsDeclinedEnabled +
+                ", chatworkNotificationsMergedEnabled=" + chatworkNotificationsMergedEnabled +
+                ", chatworkNotificationsCommentedEnabled=" + chatworkNotificationsCommentedEnabled +
+                ", chatworkNotificationsEnabledForPush=" + chatworkNotificationsEnabledForPush +
+                ", chatworkNotificationsEnabledForPersonal=" + chatworkNotificationsEnabledForPersonal +
                 ", notificationLevel=" + notificationLevel +
                 ", notificationPrLevel=" + notificationPrLevel +
-                ", slackChannelName=" + slackChannelName +
-                ", slackWebHookUrl=" + slackWebHookUrl +
-                ", slackUsername=" + slackUsername +
-                ", slackIconUrl=" + slackIconUrl +
-                ", slackIconEmoji=" + slackIconEmoji +
+                ", chatworkChannelName=" + chatworkChannelName +
+                ", chatworkWebHookUrl=" + chatworkWebHookUrl +
+                ", chatworkUsername=" + chatworkUsername +
+                ", chatworkIconUrl=" + chatworkIconUrl +
+                ", chatworkIconEmoji=" + chatworkIconEmoji +
                 "}";
     }
 

@@ -24,49 +24,49 @@ import java.util.Set;
 public class PullRequestActivityListener {
     private static final Logger log = LoggerFactory.getLogger(PullRequestActivityListener.class);
 
-    private final SlackGlobalSettingsService slackGlobalSettingsService;
-    private final SlackSettingsService slackSettingsService;
+    private final ChatworkGlobalSettingsService chatworkGlobalSettingsService;
+    private final ChatworkSettingsService chatworkSettingsService;
     private final NavBuilder navBuilder;
-    private final SlackNotifier slackNotifier;
+    private final ChatworkNotifier chatworkNotifier;
     private final AvatarService avatarService;
     private final AvatarRequest avatarRequest = new AvatarRequest(true, 16, true);
     private final Gson gson = new Gson();
 
-    public PullRequestActivityListener(SlackGlobalSettingsService slackGlobalSettingsService,
-                                             SlackSettingsService slackSettingsService,
+    public PullRequestActivityListener(ChatworkGlobalSettingsService chatworkGlobalSettingsService,
+                                             ChatworkSettingsService chatworkSettingsService,
                                              NavBuilder navBuilder,
-                                             SlackNotifier slackNotifier,
+                                             ChatworkNotifier chatworkNotifier,
                                              AvatarService avatarService) {
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
-        this.slackSettingsService = slackSettingsService;
+        this.chatworkGlobalSettingsService = chatworkGlobalSettingsService;
+        this.chatworkSettingsService = chatworkSettingsService;
         this.navBuilder = navBuilder;
-        this.slackNotifier = slackNotifier;
+        this.chatworkNotifier = chatworkNotifier;
         this.avatarService = avatarService;
     }
 
     @EventListener
-    public void NotifySlackChannel(PullRequestActivityEvent event) {
+    public void NotifyChatworkChannel(PullRequestActivityEvent event) {
         // find out if notification is enabled for this repo
         Repository repository = event.getPullRequest().getToRef().getRepository();
-        SlackSettings slackSettings = slackSettingsService.getSlackSettings(repository);
-        String globalHookUrl = slackGlobalSettingsService.getWebHookUrl();
+        ChatworkSettings chatworkSettings = chatworkSettingsService.getChatworkSettings(repository);
+        String globalHookUrl = chatworkGlobalSettingsService.getWebHookUrl();
 
 
-        SettingsSelector settingsSelector = new SettingsSelector(slackSettingsService,  slackGlobalSettingsService, repository);
-        SlackSettings resolvedSlackSettings = settingsSelector.getResolvedSlackSettings();
+        SettingsSelector settingsSelector = new SettingsSelector(chatworkSettingsService,  chatworkGlobalSettingsService, repository);
+        ChatworkSettings resolvedChatworkSettings = settingsSelector.getResolvedChatworkSettings();
 
-        if (resolvedSlackSettings.isSlackNotificationsEnabled()) {
+        if (resolvedChatworkSettings.isChatworkNotificationsEnabled()) {
 
-            String localHookUrl = resolvedSlackSettings.getSlackWebHookUrl();
+            String localHookUrl = resolvedChatworkSettings.getChatworkWebHookUrl();
             WebHookSelector hookSelector = new WebHookSelector(globalHookUrl, localHookUrl);
-            ChannelSelector channelSelector = new ChannelSelector(slackGlobalSettingsService.getChannelName(), slackSettings.getSlackChannelName());
+            ChannelSelector channelSelector = new ChannelSelector(chatworkGlobalSettingsService.getChannelName(), chatworkSettings.getChatworkChannelName());
 
             if (!hookSelector.isHookValid()) {
                 log.error("There is no valid configured Web hook url! Reason: " + hookSelector.getProblem());
                 return;
             }
 
-            if (repository.isFork() && !resolvedSlackSettings.isSlackNotificationsEnabledForPersonal()) {
+            if (repository.isFork() && !resolvedChatworkSettings.isChatworkNotificationsEnabledForPersonal()) {
                 // simply return silently when we don't want forks to get notifications unless they're explicitly enabled
                 return;
             }
@@ -78,42 +78,42 @@ public class PullRequestActivityListener {
             String activity = event.getActivity().getAction().name();
             String avatar = event.getUser() != null ? avatarService.getUrlForPerson(event.getUser(), avatarRequest) : "";
 
-            NotificationLevel resolvedLevel = resolvedSlackSettings.getNotificationPrLevel();
+            NotificationLevel resolvedLevel = resolvedChatworkSettings.getNotificationPrLevel();
 
             // Ignore RESCOPED PR events
             if (activity.equalsIgnoreCase("RESCOPED") && event instanceof PullRequestRescopeActivityEvent) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("OPENED") && !resolvedSlackSettings.isSlackNotificationsOpenedEnabled()) {
+            if (activity.equalsIgnoreCase("OPENED") && !resolvedChatworkSettings.isChatworkNotificationsOpenedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("REOPENED") && !resolvedSlackSettings.isSlackNotificationsReopenedEnabled()) {
+            if (activity.equalsIgnoreCase("REOPENED") && !resolvedChatworkSettings.isChatworkNotificationsReopenedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("UPDATED") && !resolvedSlackSettings.isSlackNotificationsUpdatedEnabled()) {
+            if (activity.equalsIgnoreCase("UPDATED") && !resolvedChatworkSettings.isChatworkNotificationsUpdatedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("APPROVED") && !resolvedSlackSettings.isSlackNotificationsApprovedEnabled()) {
+            if (activity.equalsIgnoreCase("APPROVED") && !resolvedChatworkSettings.isChatworkNotificationsApprovedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("UNAPPROVED") && !resolvedSlackSettings.isSlackNotificationsUnapprovedEnabled()) {
+            if (activity.equalsIgnoreCase("UNAPPROVED") && !resolvedChatworkSettings.isChatworkNotificationsUnapprovedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("DECLINED") && !resolvedSlackSettings.isSlackNotificationsDeclinedEnabled()) {
+            if (activity.equalsIgnoreCase("DECLINED") && !resolvedChatworkSettings.isChatworkNotificationsDeclinedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("MERGED") && !resolvedSlackSettings.isSlackNotificationsMergedEnabled()) {
+            if (activity.equalsIgnoreCase("MERGED") && !resolvedChatworkSettings.isChatworkNotificationsMergedEnabled()) {
                 return;
             }
 
-            if (activity.equalsIgnoreCase("COMMENTED") && !resolvedSlackSettings.isSlackNotificationsCommentedEnabled()) {
+            if (activity.equalsIgnoreCase("COMMENTED") && !resolvedChatworkSettings.isChatworkNotificationsCommentedEnabled()) {
                 return;
             }
 
@@ -126,14 +126,14 @@ public class PullRequestActivityListener {
                     .overview()
                     .buildAbsolute();
 
-            SlackPayload payload = new SlackPayload();
+            ChatworkPayload payload = new ChatworkPayload();
             payload.setMrkdwn(true);
             payload.setLinkNames(true);
-            payload.setUsername(resolvedSlackSettings.getSlackUsername());
-            payload.setIconUrl(resolvedSlackSettings.getSlackIconUrl());
-            payload.setIconEmoji(resolvedSlackSettings.getSlackIconEmoji());
+            payload.setUsername(resolvedChatworkSettings.getChatworkUsername());
+            payload.setIconUrl(resolvedChatworkSettings.getChatworkIconUrl());
+            payload.setIconEmoji(resolvedChatworkSettings.getChatworkIconEmoji());
 
-            SlackAttachment attachment = new SlackAttachment();
+            ChatworkAttachment attachment = new ChatworkAttachment();
             attachment.setAuthorName(userName);
             attachment.setAuthorIcon(avatar);
 
@@ -285,7 +285,7 @@ public class PullRequestActivityListener {
             }
 
             if (resolvedLevel == NotificationLevel.VERBOSE) {
-                SlackAttachmentField projectField = new SlackAttachmentField();
+                ChatworkAttachmentField projectField = new ChatworkAttachmentField();
                 projectField.setTitle("Source");
                 projectField.setValue(String.format("_%s — %s_\n`%s`",
                         event.getPullRequest().getFromRef().getRepository().getProject().getName(),
@@ -294,7 +294,7 @@ public class PullRequestActivityListener {
                 projectField.setShort(true);
                 attachment.addField(projectField);
 
-                SlackAttachmentField repoField = new SlackAttachmentField();
+                ChatworkAttachmentField repoField = new ChatworkAttachmentField();
                 repoField.setTitle("Destination");
                 repoField.setValue(String.format("_%s — %s_\n`%s`",
                         event.getPullRequest().getToRef().getRepository().getProject().getName(),
@@ -306,7 +306,7 @@ public class PullRequestActivityListener {
 
             payload.addAttachment(attachment);
 
-            // slackSettings.getSlackChannelName might be:
+            // chatworkSettings.getChatworkChannelName might be:
             // - empty
             // - single channel value
             // - comma separated list of pairs (pattern, channel) eg: bugfix/.*->#test-bf,master->#test-master
@@ -316,14 +316,14 @@ public class PullRequestActivityListener {
                 if (channelSelector.getSelectedChannel() != "") {
                     payload.setChannel(channelSelector.getSelectedChannel());
                 }
-                slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+                chatworkNotifier.SendChatworkNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
             } else {
                 Map<String, String> patterns = channelSelector.getChannels();
                 for (String pattern: patterns.keySet()) {
                     if (event.getPullRequest().getToRef().getDisplayId().replace("refs/heads/", "").matches(pattern)) {
                         payload.setChannel(patterns.get(pattern));
                         log.debug("#sending message to: " + payload.getChannel());
-                        slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+                        chatworkNotifier.SendChatworkNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
                         break;
                     }
                 }
@@ -332,15 +332,15 @@ public class PullRequestActivityListener {
 
     }
 
-    private void addField(SlackAttachment attachment, String title, String message) {
-        SlackAttachmentField field = new SlackAttachmentField();
+    private void addField(ChatworkAttachment attachment, String title, String message) {
+        ChatworkAttachmentField field = new ChatworkAttachmentField();
         field.setTitle(title);
         field.setValue(message);
         field.setShort(false);
         attachment.addField(field);
     }
 
-    private void addReviewers(SlackAttachment attachment, Set<PullRequestParticipant> reviewers) {
+    private void addReviewers(ChatworkAttachment attachment, Set<PullRequestParticipant> reviewers) {
         if (reviewers.isEmpty()) {
             return;
         }

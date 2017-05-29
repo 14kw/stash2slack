@@ -1,24 +1,24 @@
 package com.pragbits.bitbucketserver;
 
-public interface SlackSettings {
+public interface ChatworkSettings {
 
-    boolean isSlackNotificationsOverrideEnabled();
-    boolean isSlackNotificationsEnabled();
-    boolean isSlackNotificationsOpenedEnabled();
-    boolean isSlackNotificationsReopenedEnabled();
-    boolean isSlackNotificationsUpdatedEnabled();
-    boolean isSlackNotificationsApprovedEnabled();
-    boolean isSlackNotificationsUnapprovedEnabled();
-    boolean isSlackNotificationsDeclinedEnabled();
-    boolean isSlackNotificationsMergedEnabled();
-    boolean isSlackNotificationsCommentedEnabled();
-    boolean isSlackNotificationsEnabledForPush();
-    boolean isSlackNotificationsEnabledForPersonal();
+    boolean isChatworkNotificationsOverrideEnabled();
+    boolean isChatworkNotificationsEnabled();
+    boolean isChatworkNotificationsOpenedEnabled();
+    boolean isChatworkNotificationsReopenedEnabled();
+    boolean isChatworkNotificationsUpdatedEnabled();
+    boolean isChatworkNotificationsApprovedEnabled();
+    boolean isChatworkNotificationsUnapprovedEnabled();
+    boolean isChatworkNotificationsDeclinedEnabled();
+    boolean isChatworkNotificationsMergedEnabled();
+    boolean isChatworkNotificationsCommentedEnabled();
+    boolean isChatworkNotificationsEnabledForPush();
+    boolean isChatworkNotificationsEnabledForPersonal();
     NotificationLevel getNotificationLevel();
     NotificationLevel getNotificationPrLevel();
-    String getSlackChannelName();
-    String getSlackWebHookUrl();
-    String getSlackUsername();
-    String getSlackIconUrl();
-    String getSlackIconEmoji();
+    String getChatworkChannelName();
+    String getChatworkWebHookUrl();
+    String getChatworkUsername();
+    String getChatworkIconUrl();
+    String getChatworkIconEmoji();
 }

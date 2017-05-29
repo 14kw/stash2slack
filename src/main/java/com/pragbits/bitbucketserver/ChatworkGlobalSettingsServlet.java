@@ -17,20 +17,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-public class SlackGlobalSettingsServlet extends HttpServlet {
+public class ChatworkGlobalSettingsServlet extends HttpServlet {
     private final PageBuilderService pageBuilderService;
-    private final SlackGlobalSettingsService slackGlobalSettingsService;
+    private final ChatworkGlobalSettingsService chatworkGlobalSettingsService;
     private final SoyTemplateRenderer soyTemplateRenderer;
     private final PermissionValidationService validationService;
     private final I18nService i18nService;
 
-    public SlackGlobalSettingsServlet(PageBuilderService pageBuilderService,
-                                      SlackGlobalSettingsService slackGlobalSettingsService,
+    public ChatworkGlobalSettingsServlet(PageBuilderService pageBuilderService,
+                                      ChatworkGlobalSettingsService chatworkGlobalSettingsService,
                                       SoyTemplateRenderer soyTemplateRenderer,
                                       PermissionValidationService validationService,
                                       I18nService i18nService) {
         this.pageBuilderService = pageBuilderService;
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
+        this.chatworkGlobalSettingsService = chatworkGlobalSettingsService;
         this.soyTemplateRenderer = soyTemplateRenderer;
         this.validationService = validationService;
         this.i18nService = i18nService;
@@ -49,36 +49,36 @@ public class SlackGlobalSettingsServlet extends HttpServlet {
             return;
         }
 
-        slackGlobalSettingsService.setWebHookUrl(req.getParameter("slackGlobalWebHookUrl").trim());
-        slackGlobalSettingsService.setChannelName(req.getParameter("slackChannelName"));
-        slackGlobalSettingsService.setUsername(req.getParameter("slackUsername"));
-        slackGlobalSettingsService.setIconUrl(req.getParameter("slackIconUrl"));
-        slackGlobalSettingsService.setIconEmoji(req.getParameter("slackIconEmoji"));
+        chatworkGlobalSettingsService.setWebHookUrl(req.getParameter("chatworkGlobalWebHookUrl").trim());
+        chatworkGlobalSettingsService.setChannelName(req.getParameter("chatworkChannelName"));
+        chatworkGlobalSettingsService.setUsername(req.getParameter("chatworkUsername"));
+        chatworkGlobalSettingsService.setIconUrl(req.getParameter("chatworkIconUrl"));
+        chatworkGlobalSettingsService.setIconEmoji(req.getParameter("chatworkIconEmoji"));
 
-        slackGlobalSettingsService.setSlackNotificationsEnabled(bool(req, "slackNotificationsEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsOpenedEnabled(bool(req, "slackNotificationsOpenedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsReopenedEnabled(bool(req, "slackNotificationsReopenedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsUpdatedEnabled(bool(req, "slackNotificationsUpdatedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsApprovedEnabled(bool(req, "slackNotificationsApprovedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsUnapprovedEnabled(bool(req, "slackNotificationsUnapprovedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsDeclinedEnabled(bool(req, "slackNotificationsDeclinedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsMergedEnabled(bool(req, "slackNotificationsMergedEnabled"));
-        slackGlobalSettingsService.setSlackNotificationsCommentedEnabled(bool(req, "slackNotificationsCommentedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsEnabled(bool(req, "chatworkNotificationsEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsOpenedEnabled(bool(req, "chatworkNotificationsOpenedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsReopenedEnabled(bool(req, "chatworkNotificationsReopenedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsUpdatedEnabled(bool(req, "chatworkNotificationsUpdatedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsApprovedEnabled(bool(req, "chatworkNotificationsApprovedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsUnapprovedEnabled(bool(req, "chatworkNotificationsUnapprovedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsDeclinedEnabled(bool(req, "chatworkNotificationsDeclinedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsMergedEnabled(bool(req, "chatworkNotificationsMergedEnabled"));
+        chatworkGlobalSettingsService.setChatworkNotificationsCommentedEnabled(bool(req, "chatworkNotificationsCommentedEnabled"));
 
         NotificationLevel notificationLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationLevel")) {
-            notificationLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationLevel"));
+        if (null != req.getParameter("chatworkNotificationLevel")) {
+            notificationLevel = NotificationLevel.valueOf(req.getParameter("chatworkNotificationLevel"));
         }
-        slackGlobalSettingsService.setNotificationLevel(notificationLevel.toString());
+        chatworkGlobalSettingsService.setNotificationLevel(notificationLevel.toString());
 
         NotificationLevel notificationPrLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationPrLevel")) {
-            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationPrLevel"));
+        if (null != req.getParameter("chatworkNotificationPrLevel")) {
+            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("chatworkNotificationPrLevel"));
         }
-        slackGlobalSettingsService.setNotificationPrLevel(notificationPrLevel.toString());
+        chatworkGlobalSettingsService.setNotificationPrLevel(notificationPrLevel.toString());
 
-        slackGlobalSettingsService.setSlackNotificationsEnabledForPush(bool(req, "slackNotificationsEnabledForPush"));
-        slackGlobalSettingsService.setSlackNotificationsEnabledForPersonal(bool(req, "slackNotificationsEnabledForPersonal"));
+        chatworkGlobalSettingsService.setChatworkNotificationsEnabledForPush(bool(req, "chatworkNotificationsEnabledForPush"));
+        chatworkGlobalSettingsService.setChatworkNotificationsEnabledForPersonal(bool(req, "chatworkNotificationsEnabledForPersonal"));
 
         doGet(req, res);
     }
@@ -95,54 +95,54 @@ public class SlackGlobalSettingsServlet extends HttpServlet {
 
         validationService.validateForGlobal(Permission.ADMIN);
 
-        String webHookUrl = slackGlobalSettingsService.getWebHookUrl();
-        String channelName = slackGlobalSettingsService.getChannelName();
-        String userName = slackGlobalSettingsService.getUsername();
-        String iconUrl = slackGlobalSettingsService.getIconUrl();
-        String iconEmoji = slackGlobalSettingsService.getIconEmoji();
-        Boolean slackNotificationsEnabled = slackGlobalSettingsService.getSlackNotificationsEnabled();
-        Boolean slackNotificationsOpenedEnabled = slackGlobalSettingsService.getSlackNotificationsOpenedEnabled();
-        Boolean slackNotificationsReopenedEnabled = slackGlobalSettingsService.getSlackNotificationsReopenedEnabled();
-        Boolean slackNotificationsUpdatedEnabled = slackGlobalSettingsService.getSlackNotificationsUpdatedEnabled();
-        Boolean slackNotificationsApprovedEnabled = slackGlobalSettingsService.getSlackNotificationsApprovedEnabled();
-        Boolean slackNotificationsUnapprovedEnabled = slackGlobalSettingsService.getSlackNotificationsUnapprovedEnabled();
-        Boolean slackNotificationsDeclinedEnabled = slackGlobalSettingsService.getSlackNotificationsDeclinedEnabled();
-        Boolean slackNotificationsMergedEnabled = slackGlobalSettingsService.getSlackNotificationsMergedEnabled();
-        Boolean slackNotificationsCommentedEnabled = slackGlobalSettingsService.getSlackNotificationsCommentedEnabled();
-        Boolean slackNotificationsEnabledForPush = slackGlobalSettingsService.getSlackNotificationsEnabledForPush();
-        Boolean slackNotificationsEnabledForPersonal = slackGlobalSettingsService.getSlackNotificationsEnabledForPersonal();
-        String notificationLevel = slackGlobalSettingsService.getNotificationLevel().toString();
-        String notificationPrLevel = slackGlobalSettingsService.getNotificationPrLevel().toString();
+        String webHookUrl = chatworkGlobalSettingsService.getWebHookUrl();
+        String channelName = chatworkGlobalSettingsService.getChannelName();
+        String userName = chatworkGlobalSettingsService.getUsername();
+        String iconUrl = chatworkGlobalSettingsService.getIconUrl();
+        String iconEmoji = chatworkGlobalSettingsService.getIconEmoji();
+        Boolean chatworkNotificationsEnabled = chatworkGlobalSettingsService.getChatworkNotificationsEnabled();
+        Boolean chatworkNotificationsOpenedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsOpenedEnabled();
+        Boolean chatworkNotificationsReopenedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsReopenedEnabled();
+        Boolean chatworkNotificationsUpdatedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsUpdatedEnabled();
+        Boolean chatworkNotificationsApprovedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsApprovedEnabled();
+        Boolean chatworkNotificationsUnapprovedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsUnapprovedEnabled();
+        Boolean chatworkNotificationsDeclinedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsDeclinedEnabled();
+        Boolean chatworkNotificationsMergedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsMergedEnabled();
+        Boolean chatworkNotificationsCommentedEnabled = chatworkGlobalSettingsService.getChatworkNotificationsCommentedEnabled();
+        Boolean chatworkNotificationsEnabledForPush = chatworkGlobalSettingsService.getChatworkNotificationsEnabledForPush();
+        Boolean chatworkNotificationsEnabledForPersonal = chatworkGlobalSettingsService.getChatworkNotificationsEnabledForPersonal();
+        String notificationLevel = chatworkGlobalSettingsService.getNotificationLevel().toString();
+        String notificationPrLevel = chatworkGlobalSettingsService.getNotificationPrLevel().toString();
 
         render(response,
-                "bitbucketserver.page.slack.global.settings.viewGlobalSlackSettings",
+                "bitbucketserver.page.chatwork.global.settings.viewGlobalChatworkSettings",
                 ImmutableMap.<String, Object>builder()
-                        .put("slackGlobalWebHookUrl", webHookUrl)
-                        .put("slackChannelName", channelName)
-                        .put("slackNotificationsEnabled", slackNotificationsEnabled)
-                        .put("slackNotificationsOpenedEnabled", slackNotificationsOpenedEnabled)
-                        .put("slackNotificationsReopenedEnabled", slackNotificationsReopenedEnabled)
-                        .put("slackNotificationsUpdatedEnabled", slackNotificationsUpdatedEnabled)
-                        .put("slackNotificationsApprovedEnabled", slackNotificationsApprovedEnabled)
-                        .put("slackNotificationsUnapprovedEnabled", slackNotificationsUnapprovedEnabled)
-                        .put("slackNotificationsDeclinedEnabled", slackNotificationsDeclinedEnabled)
-                        .put("slackNotificationsMergedEnabled", slackNotificationsMergedEnabled)
-                        .put("slackNotificationsCommentedEnabled", slackNotificationsCommentedEnabled)
-                        .put("slackNotificationsEnabledForPush", slackNotificationsEnabledForPush)
-                        .put("slackNotificationsEnabledForPersonal", slackNotificationsEnabledForPersonal)
+                        .put("chatworkGlobalWebHookUrl", webHookUrl)
+                        .put("chatworkChannelName", channelName)
+                        .put("chatworkNotificationsEnabled", chatworkNotificationsEnabled)
+                        .put("chatworkNotificationsOpenedEnabled", chatworkNotificationsOpenedEnabled)
+                        .put("chatworkNotificationsReopenedEnabled", chatworkNotificationsReopenedEnabled)
+                        .put("chatworkNotificationsUpdatedEnabled", chatworkNotificationsUpdatedEnabled)
+                        .put("chatworkNotificationsApprovedEnabled", chatworkNotificationsApprovedEnabled)
+                        .put("chatworkNotificationsUnapprovedEnabled", chatworkNotificationsUnapprovedEnabled)
+                        .put("chatworkNotificationsDeclinedEnabled", chatworkNotificationsDeclinedEnabled)
+                        .put("chatworkNotificationsMergedEnabled", chatworkNotificationsMergedEnabled)
+                        .put("chatworkNotificationsCommentedEnabled", chatworkNotificationsCommentedEnabled)
+                        .put("chatworkNotificationsEnabledForPush", chatworkNotificationsEnabledForPush)
+                        .put("chatworkNotificationsEnabledForPersonal", chatworkNotificationsEnabledForPersonal)
                         .put("notificationLevel", notificationLevel)
                         .put("notificationPrLevel", notificationPrLevel)
                         .put("notificationLevels", new SelectFieldOptions(NotificationLevel.values()).toSoyStructure())
-                        .put("slackUsername", userName)
-                        .put("slackIconUrl", iconUrl)
-                        .put("slackIconEmoji", iconEmoji)
+                        .put("chatworkUsername", userName)
+                        .put("chatworkIconUrl", iconUrl)
+                        .put("chatworkIconEmoji", iconEmoji)
                         .build()
         );
     }
 
     private void render(HttpServletResponse response, String templateName, Map<String, Object> data)
             throws IOException, ServletException {
-        pageBuilderService.assembler().resources().requireContext("plugin.adminpage.slack");
+        pageBuilderService.assembler().resources().requireContext("plugin.adminpage.chatwork");
         response.setContentType("text/html;charset=UTF-8");
         try {
             soyTemplateRenderer.render(response.getWriter(), PluginMetadata.getCompleteModuleKey("soy-templates"), templateName, data);

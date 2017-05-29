@@ -1,7 +1,7 @@
 package com.pragbits.bitbucketserver.tools;
 import com.google.gson.annotations.*;
 
-public class SlackAttachmentField {
+public class ChatworkAttachmentField {
 
 
     public String getTitle() {

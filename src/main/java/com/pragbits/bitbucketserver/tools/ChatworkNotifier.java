@@ -11,16 +11,16 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SlackNotifier {
+public class ChatworkNotifier {
 
     private final CloseableHttpClient httpClient = HttpClients.createSystem();
-    private static final Logger log = LoggerFactory.getLogger(SlackNotifier.class);
+    private static final Logger log = LoggerFactory.getLogger(ChatworkNotifier.class);
 
-    public  SlackNotifier() {
+    public  ChatworkNotifier() {
 
     }
 
-    public void SendSlackNotification(String targetUrl, String jsonString) {
+    public void SendChatworkNotification(String targetUrl, String jsonString) {
         try {
             /*
             RequestConfig requestConfig = RequestConfig.custom()
@@ -38,14 +38,14 @@ public class SlackNotifier {
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                     HttpEntity entity = response.getEntity();
                     String responseString = EntityUtils.toString(entity, "UTF-8");
-                    log.error("#error during httpPost in SlackNotifier: " + responseString);
+                    log.error("#error during httpPost in ChatworkNotifier: " + responseString);
                     log.error("\tpayload string: " + jsonString);
                 }
             } finally {
                 response.close();
             }
         } catch (Exception e) {
-            log.error("#error during http request execution in SlackNotifier: ", e);
+            log.error("#error during http request execution in ChatworkNotifier: ", e);
         }
     }
 }

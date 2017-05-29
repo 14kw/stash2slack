@@ -13,9 +13,9 @@ import com.atlassian.bitbucket.util.PageRequest;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.pragbits.bitbucketserver.ColorCode;
-import com.pragbits.bitbucketserver.SlackGlobalSettingsService;
-import com.pragbits.bitbucketserver.SlackSettings;
-import com.pragbits.bitbucketserver.SlackSettingsService;
+import com.pragbits.bitbucketserver.ChatworkGlobalSettingsService;
+import com.pragbits.bitbucketserver.ChatworkSettings;
+import com.pragbits.bitbucketserver.ChatworkSettingsService;
 import com.pragbits.bitbucketserver.tools.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,46 +28,46 @@ import java.util.Map;
 public class RepositoryPushActivityListener {
     private static final Logger log = LoggerFactory.getLogger(RepositoryPushActivityListener.class);
 
-    private final SlackGlobalSettingsService slackGlobalSettingsService;
-    private final SlackSettingsService slackSettingsService;
+    private final ChatworkGlobalSettingsService chatworkGlobalSettingsService;
+    private final ChatworkSettingsService chatworkSettingsService;
     private final CommitService commitService;
     private final NavBuilder navBuilder;
-    private final SlackNotifier slackNotifier;
+    private final ChatworkNotifier chatworkNotifier;
     private final Gson gson = new Gson();
 
-    public RepositoryPushActivityListener(SlackGlobalSettingsService slackGlobalSettingsService,
-                                          SlackSettingsService slackSettingsService,
+    public RepositoryPushActivityListener(ChatworkGlobalSettingsService chatworkGlobalSettingsService,
+                                          ChatworkSettingsService chatworkSettingsService,
                                           CommitService commitService,
                                           NavBuilder navBuilder,
-                                          SlackNotifier slackNotifier) {
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
-        this.slackSettingsService = slackSettingsService;
+                                          ChatworkNotifier chatworkNotifier) {
+        this.chatworkGlobalSettingsService = chatworkGlobalSettingsService;
+        this.chatworkSettingsService = chatworkSettingsService;
         this.commitService = commitService;
         this.navBuilder = navBuilder;
-        this.slackNotifier = slackNotifier;
+        this.chatworkNotifier = chatworkNotifier;
     }
 
     @EventListener
-    public void NotifySlackChannel(RepositoryPushEvent event) {
+    public void NotifyChatworkChannel(RepositoryPushEvent event) {
         // find out if notification is enabled for this repo
         Repository repository = event.getRepository();
-        SlackSettings slackSettings = slackSettingsService.getSlackSettings(repository);
-        String globalHookUrl = slackGlobalSettingsService.getWebHookUrl();
+        ChatworkSettings chatworkSettings = chatworkSettingsService.getChatworkSettings(repository);
+        String globalHookUrl = chatworkGlobalSettingsService.getWebHookUrl();
 
-        SettingsSelector settingsSelector = new SettingsSelector(slackSettingsService,  slackGlobalSettingsService, repository);
-        SlackSettings resolvedSlackSettings = settingsSelector.getResolvedSlackSettings();
+        SettingsSelector settingsSelector = new SettingsSelector(chatworkSettingsService,  chatworkGlobalSettingsService, repository);
+        ChatworkSettings resolvedChatworkSettings = settingsSelector.getResolvedChatworkSettings();
 
-        if (resolvedSlackSettings.isSlackNotificationsEnabledForPush()) {
-            String localHookUrl = slackSettings.getSlackWebHookUrl();
+        if (resolvedChatworkSettings.isChatworkNotificationsEnabledForPush()) {
+            String localHookUrl = chatworkSettings.getChatworkWebHookUrl();
             WebHookSelector hookSelector = new WebHookSelector(globalHookUrl, localHookUrl);
-            ChannelSelector channelSelector = new ChannelSelector(slackGlobalSettingsService.getChannelName(), slackSettings.getSlackChannelName());
+            ChannelSelector channelSelector = new ChannelSelector(chatworkGlobalSettingsService.getChannelName(), chatworkSettings.getChatworkChannelName());
 
             if (!hookSelector.isHookValid()) {
                 log.error("There is no valid configured Web hook url! Reason: " + hookSelector.getProblem());
                 return;
             }
 
-            if (repository.isFork() && !resolvedSlackSettings.isSlackNotificationsEnabledForPersonal()) {
+            if (repository.isFork() && !resolvedChatworkSettings.isChatworkNotificationsEnabledForPersonal()) {
                 // simply return silently when we don't want forks to get notifications unless they're explicitly enabled
                 return;
             }
@@ -149,18 +149,18 @@ public class RepositoryPushActivityListener {
 
                 // Figure out what type of change this is:
 
-                SlackPayload payload = new SlackPayload();
+                ChatworkPayload payload = new ChatworkPayload();
 
-                if (!resolvedSlackSettings.getSlackIconEmoji().isEmpty()) {
-                    text = resolvedSlackSettings.getSlackIconEmoji() + " " + text;
+                if (!resolvedChatworkSettings.getChatworkIconEmoji().isEmpty()) {
+                    text = resolvedChatworkSettings.getChatworkIconEmoji() + " " + text;
                 }
                 payload.setText(text);
                 payload.setMrkdwn(true);
-                payload.setUsername(resolvedSlackSettings.getSlackUsername());
-                payload.setIconUrl(resolvedSlackSettings.getSlackIconUrl());
-                payload.setIconEmoji(resolvedSlackSettings.getSlackIconEmoji());
+                payload.setUsername(resolvedChatworkSettings.getChatworkUsername());
+                payload.setIconUrl(resolvedChatworkSettings.getChatworkIconUrl());
+                payload.setIconEmoji(resolvedChatworkSettings.getChatworkIconEmoji());
 
-                switch (resolvedSlackSettings.getNotificationLevel()) {
+                switch (resolvedChatworkSettings.getNotificationLevel()) {
                     case COMPACT:
                         compactCommitLog(event, refChange, payload, repoUrlBuilder, myCommits);
                         break;
@@ -172,7 +172,7 @@ public class RepositoryPushActivityListener {
                         break;
                 }
 
-                // slackSettings.getSlackChannelName might be:
+                // chatworkSettings.getChatworkChannelName might be:
                 // - empty
                 // - single channel value
                 // - comma separated list of pairs (pattern, channel) eg: bugfix/.*->#test-bf,master->#test-master
@@ -182,14 +182,14 @@ public class RepositoryPushActivityListener {
                     if (channelSelector.getSelectedChannel() != "") {
                         payload.setChannel(channelSelector.getSelectedChannel());
                     }
-                    slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+                    chatworkNotifier.SendChatworkNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
                 } else {
                     Map<String, String> patterns = channelSelector.getChannels();
                     for (String pattern: patterns.keySet()) {
                         if (ref.replace("refs/heads/", "").matches(pattern)) {
                             payload.setChannel(patterns.get(pattern));
                             log.debug("#sending message to: " + payload.getChannel());
-                            slackNotifier.SendSlackNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
+                            chatworkNotifier.SendChatworkNotification(hookSelector.getSelectedHook(), gson.toJson(payload));
                             break;
                         }
                     }
@@ -198,11 +198,11 @@ public class RepositoryPushActivityListener {
         }
     }
 
-    private void compactCommitLog(RepositoryPushEvent event, RefChange refChange, SlackPayload payload, NavBuilder.Repo urlBuilder, List<Commit> myCommits) {
+    private void compactCommitLog(RepositoryPushEvent event, RefChange refChange, ChatworkPayload payload, NavBuilder.Repo urlBuilder, List<Commit> myCommits) {
         if (myCommits.size() == 0) {
             // If there are no commits, no reason to add anything
         }
-        SlackAttachment commits = new SlackAttachment();
+        ChatworkAttachment commits = new ChatworkAttachment();
         commits.setColor(ColorCode.GRAY.getCode());
         // Since the branch is now in the main commit line, title is not needed
         //commits.setTitle(String.format("[%s:%s]", event.getRepository().getName(), refChange.getRefId().replace("refs/heads", "")));
@@ -213,7 +213,7 @@ public class RepositoryPushActivityListener {
             String firstCommitMessageLine = c.getMessage().split("\n")[0];
 
             // Note that we changed this to put everything in one attachment because otherwise it
-            // doesn't get collapsed in slack (the see more... doesn't appear)
+            // doesn't get collapsed in chatwork (the see more... doesn't appear)
             commitListBlock.append(String.format("<%s|`%s`>: %s - _%s_\n",
                     commitUrl, c.getDisplayId(), firstCommitMessageLine, c.getAuthor().getName()));
 
@@ -225,12 +225,12 @@ public class RepositoryPushActivityListener {
         payload.addAttachment(commits);
     }
 
-    private void verboseCommitLog(RepositoryPushEvent event, RefChange refChange, SlackPayload payload, NavBuilder.Repo urlBuilder, String text, List<Commit> myCommits) {
+    private void verboseCommitLog(RepositoryPushEvent event, RefChange refChange, ChatworkPayload payload, NavBuilder.Repo urlBuilder, String text, List<Commit> myCommits) {
         for (Commit c : myCommits) {
-            SlackAttachment attachment = new SlackAttachment();
+            ChatworkAttachment attachment = new ChatworkAttachment();
             attachment.setFallback(text);
             attachment.setColor(ColorCode.GRAY.getCode());
-            SlackAttachmentField field = new SlackAttachmentField();
+            ChatworkAttachmentField field = new ChatworkAttachmentField();
 
             attachment.setTitle(String.format("[%s:%s] - %s", event.getRepository().getName(), refChange.getRefId().replace("refs/heads", ""), c.getId()));
             attachment.setTitle_link(urlBuilder.commit(c.getId()).buildAbsolute());

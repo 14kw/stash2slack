@@ -18,9 +18,9 @@ import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DefaultSlackSettingsService implements SlackSettingsService {
+public class DefaultChatworkSettingsService implements ChatworkSettingsService {
 
-    static final ImmutableSlackSettings DEFAULT_CONFIG = new ImmutableSlackSettings(
+    static final ImmutableChatworkSettings DEFAULT_CONFIG = new ImmutableChatworkSettings(
             false,  // pr settings override enabled
             false,  // pull requests enabled
             true,   // opened
@@ -42,33 +42,33 @@ public class DefaultSlackSettingsService implements SlackSettingsService {
             ""          // iconEmoji override
     );
 
-    static final String KEY_SLACK_OVERRIDE_NOTIFICATION = "slackNotificationsOverrideEnabled";
-    static final String KEY_SLACK_NOTIFICATION = "slackNotificationsEnabled";
-    static final String KEY_SLACK_OPENED_NOTIFICATION = "slackNotificationsOpenedEnabled";
-    static final String KEY_SLACK_REOPENED_NOTIFICATION = "slackNotificationsReopenedEnabled";
-    static final String KEY_SLACK_UPDATED_NOTIFICATION = "slackNotificationsUpdatedEnabled";
-    static final String KEY_SLACK_APPROVED_NOTIFICATION = "slackNotificationsApprovedEnabled";
-    static final String KEY_SLACK_UNAPPROVED_NOTIFICATION = "slackNotificationsUnapprovedEnabled";
-    static final String KEY_SLACK_DECLINED_NOTIFICATION = "slackNotificationsDeclinedEnabled";
-    static final String KEY_SLACK_MERGED_NOTIFICATION = "slackNotificationsMergedEnabled";
-    static final String KEY_SLACK_COMMENTED_NOTIFICATION = "slackNotificationsCommentedEnabled";
-    static final String KEY_SLACK_NOTIFICATION_PUSH = "slackNotificationsEnabledForPush";
-    static final String KEY_SLACK_NOTIFICATION_PERSONAL = "slackNotificationsEnabledForPersonal";
-    static final String KEY_SLACK_NOTIFICATION_LEVEL = "slackNotificationLevel";
-    static final String KEY_SLACK_NOTIFICATION_PR_LEVEL = "slackNotificationPrLevel";
-    static final String KEY_SLACK_CHANNEL_NAME = "slackChannelName";
-    static final String KEY_SLACK_WEBHOOK_URL = "slackWebHookUrl";
-    static final String KEY_SLACK_USER_NAME = "slackUsername";
-    static final String KEY_SLACK_ICON_URL = "slackIconUrl";
-    static final String KEY_SLACK_ICON_EMOJI = "slackIconEmojil";
+    static final String KEY_SLACK_OVERRIDE_NOTIFICATION = "chatworkNotificationsOverrideEnabled";
+    static final String KEY_SLACK_NOTIFICATION = "chatworkNotificationsEnabled";
+    static final String KEY_SLACK_OPENED_NOTIFICATION = "chatworkNotificationsOpenedEnabled";
+    static final String KEY_SLACK_REOPENED_NOTIFICATION = "chatworkNotificationsReopenedEnabled";
+    static final String KEY_SLACK_UPDATED_NOTIFICATION = "chatworkNotificationsUpdatedEnabled";
+    static final String KEY_SLACK_APPROVED_NOTIFICATION = "chatworkNotificationsApprovedEnabled";
+    static final String KEY_SLACK_UNAPPROVED_NOTIFICATION = "chatworkNotificationsUnapprovedEnabled";
+    static final String KEY_SLACK_DECLINED_NOTIFICATION = "chatworkNotificationsDeclinedEnabled";
+    static final String KEY_SLACK_MERGED_NOTIFICATION = "chatworkNotificationsMergedEnabled";
+    static final String KEY_SLACK_COMMENTED_NOTIFICATION = "chatworkNotificationsCommentedEnabled";
+    static final String KEY_SLACK_NOTIFICATION_PUSH = "chatworkNotificationsEnabledForPush";
+    static final String KEY_SLACK_NOTIFICATION_PERSONAL = "chatworkNotificationsEnabledForPersonal";
+    static final String KEY_SLACK_NOTIFICATION_LEVEL = "chatworkNotificationLevel";
+    static final String KEY_SLACK_NOTIFICATION_PR_LEVEL = "chatworkNotificationPrLevel";
+    static final String KEY_SLACK_CHANNEL_NAME = "chatworkChannelName";
+    static final String KEY_SLACK_WEBHOOK_URL = "chatworkWebHookUrl";
+    static final String KEY_SLACK_USER_NAME = "chatworkUsername";
+    static final String KEY_SLACK_ICON_URL = "chatworkIconUrl";
+    static final String KEY_SLACK_ICON_EMOJI = "chatworkIconEmojil";
 
     private final PluginSettings pluginSettings;
     private final PermissionValidationService validationService;
 
-    private final LoadingCache<Integer, SlackSettings> cache = CacheBuilder.newBuilder().build(
-            new CacheLoader<Integer, SlackSettings>() {
+    private final LoadingCache<Integer, ChatworkSettings> cache = CacheBuilder.newBuilder().build(
+            new CacheLoader<Integer, ChatworkSettings>() {
                 @Override
-                public SlackSettings load(@Nonnull Integer repositoryId) {
+                public ChatworkSettings load(@Nonnull Integer repositoryId) {
                     @SuppressWarnings("unchecked")
                     Map<String, String> data = (Map) pluginSettings.get(repositoryId.toString());
                     return data == null ? DEFAULT_CONFIG : deserialize(data);
@@ -76,14 +76,14 @@ public class DefaultSlackSettingsService implements SlackSettingsService {
             }
     );
 
-    public DefaultSlackSettingsService(PluginSettingsFactory pluginSettingsFactory, PermissionValidationService validationService) {
+    public DefaultChatworkSettingsService(PluginSettingsFactory pluginSettingsFactory, PermissionValidationService validationService) {
         this.validationService = validationService;
         this.pluginSettings = pluginSettingsFactory.createSettingsForKey(PluginMetadata.getPluginKey());
     }
 
     @Nonnull
     @Override
-    public SlackSettings getSlackSettings(@Nonnull Repository repository) {
+    public ChatworkSettings getChatworkSettings(@Nonnull Repository repository) {
         validationService.validateForRepository(checkNotNull(repository, "repository"), Permission.REPO_READ);
 
         try {
@@ -96,7 +96,7 @@ public class DefaultSlackSettingsService implements SlackSettingsService {
 
     @Nonnull
     @Override
-    public SlackSettings setSlackSettings(@Nonnull Repository repository, @Nonnull SlackSettings settings) {
+    public ChatworkSettings setChatworkSettings(@Nonnull Repository repository, @Nonnull ChatworkSettings settings) {
         validationService.validateForRepository(checkNotNull(repository, "repository"), Permission.REPO_ADMIN);
         Map<String, String> data = serialize(checkNotNull(settings, "settings"));
         pluginSettings.put(Integer.toString(repository.getId()), data);
@@ -107,27 +107,27 @@ public class DefaultSlackSettingsService implements SlackSettingsService {
 
     // note: for unknown reason, pluginSettngs.get() is not getting back the key for an empty string value
     // probably I don't know someyhing here. Applying a hack
-    private Map<String, String> serialize(SlackSettings settings) {
+    private Map<String, String> serialize(ChatworkSettings settings) {
         ImmutableMap<String, String> immutableMap = ImmutableMap.<String, String>builder()
-                .put(KEY_SLACK_OVERRIDE_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsOverrideEnabled()))
-                .put(KEY_SLACK_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsEnabled()))
-                .put(KEY_SLACK_OPENED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsOpenedEnabled()))
-                .put(KEY_SLACK_REOPENED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsReopenedEnabled()))
-                .put(KEY_SLACK_UPDATED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsUpdatedEnabled()))
-                .put(KEY_SLACK_APPROVED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsApprovedEnabled()))
-                .put(KEY_SLACK_UNAPPROVED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsUnapprovedEnabled()))
-                .put(KEY_SLACK_DECLINED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsDeclinedEnabled()))
-                .put(KEY_SLACK_MERGED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsMergedEnabled()))
-                .put(KEY_SLACK_COMMENTED_NOTIFICATION, Boolean.toString(settings.isSlackNotificationsCommentedEnabled()))
-                .put(KEY_SLACK_NOTIFICATION_PUSH, Boolean.toString(settings.isSlackNotificationsEnabledForPush()))
-                .put(KEY_SLACK_NOTIFICATION_PERSONAL, Boolean.toString(settings.isSlackNotificationsEnabledForPersonal()))
+                .put(KEY_SLACK_OVERRIDE_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsOverrideEnabled()))
+                .put(KEY_SLACK_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsEnabled()))
+                .put(KEY_SLACK_OPENED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsOpenedEnabled()))
+                .put(KEY_SLACK_REOPENED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsReopenedEnabled()))
+                .put(KEY_SLACK_UPDATED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsUpdatedEnabled()))
+                .put(KEY_SLACK_APPROVED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsApprovedEnabled()))
+                .put(KEY_SLACK_UNAPPROVED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsUnapprovedEnabled()))
+                .put(KEY_SLACK_DECLINED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsDeclinedEnabled()))
+                .put(KEY_SLACK_MERGED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsMergedEnabled()))
+                .put(KEY_SLACK_COMMENTED_NOTIFICATION, Boolean.toString(settings.isChatworkNotificationsCommentedEnabled()))
+                .put(KEY_SLACK_NOTIFICATION_PUSH, Boolean.toString(settings.isChatworkNotificationsEnabledForPush()))
+                .put(KEY_SLACK_NOTIFICATION_PERSONAL, Boolean.toString(settings.isChatworkNotificationsEnabledForPersonal()))
                 .put(KEY_SLACK_NOTIFICATION_LEVEL, settings.getNotificationLevel().toString())
                 .put(KEY_SLACK_NOTIFICATION_PR_LEVEL, settings.getNotificationPrLevel().toString())
-                .put(KEY_SLACK_CHANNEL_NAME, settings.getSlackChannelName().isEmpty() ? " " : settings.getSlackChannelName())
-                .put(KEY_SLACK_WEBHOOK_URL, settings.getSlackWebHookUrl().isEmpty() ? " " : settings.getSlackWebHookUrl())
-                .put(KEY_SLACK_USER_NAME, settings.getSlackUsername().isEmpty() ? " " : settings.getSlackUsername())
-                .put(KEY_SLACK_ICON_URL, settings.getSlackIconUrl().isEmpty() ? " " : settings.getSlackIconUrl())
-                .put(KEY_SLACK_ICON_EMOJI, settings.getSlackIconEmoji().isEmpty() ? " " : settings.getSlackIconEmoji())
+                .put(KEY_SLACK_CHANNEL_NAME, settings.getChatworkChannelName().isEmpty() ? " " : settings.getChatworkChannelName())
+                .put(KEY_SLACK_WEBHOOK_URL, settings.getChatworkWebHookUrl().isEmpty() ? " " : settings.getChatworkWebHookUrl())
+                .put(KEY_SLACK_USER_NAME, settings.getChatworkUsername().isEmpty() ? " " : settings.getChatworkUsername())
+                .put(KEY_SLACK_ICON_URL, settings.getChatworkIconUrl().isEmpty() ? " " : settings.getChatworkIconUrl())
+                .put(KEY_SLACK_ICON_EMOJI, settings.getChatworkIconEmoji().isEmpty() ? " " : settings.getChatworkIconEmoji())
                 .build();
 
         return  immutableMap;
@@ -135,8 +135,8 @@ public class DefaultSlackSettingsService implements SlackSettingsService {
 
     // note: for unknown reason, pluginSettngs.get() is not getting back the key for an empty string value
     // probably I don't know something here. Applying a hack
-    private SlackSettings deserialize(Map<String, String> settings) {
-        return new ImmutableSlackSettings(
+    private ChatworkSettings deserialize(Map<String, String> settings) {
+        return new ImmutableChatworkSettings(
                 Boolean.parseBoolean(settings.get(KEY_SLACK_OVERRIDE_NOTIFICATION)),
                 Boolean.parseBoolean(settings.get(KEY_SLACK_NOTIFICATION)),
                 Boolean.parseBoolean(settings.get(KEY_SLACK_OPENED_NOTIFICATION)),

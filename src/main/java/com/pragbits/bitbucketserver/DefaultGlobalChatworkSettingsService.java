@@ -5,29 +5,29 @@ import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.google.common.base.Strings;
 
-public class DefaultGlobalSlackSettingsService implements SlackGlobalSettingsService {
-    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2slack.globalsettings.hookurl";
-    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "stash2slack.globalsettings.channelname";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "stash2slack.globalsettings.slacknotificationsenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "stash2slack.globalsettings.slacknotificationsopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "stash2slack.globalsettings.slacknotificationsreopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "stash2slack.globalsettings.slacknotificationsupdatedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "stash2slack.globalsettings.slacknotificationsapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "stash2slack.globalsettings.slacknotificationsunapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "stash2slack.globalsettings.slacknotificationsdeclinedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "stash2slack.globalsettings.slacknotificationsmergedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "stash2slack.globalsettings.slacknotificationscommentedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "stash2slack.globalsettings.slacknotificationslevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "stash2slack.globalsettings.slacknotificationsprlevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "stash2slack.globalsettings.slacknotificationspushenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED = "stash2slack.globalsettings.slacknotificationspersonalenabled";
-    private static final String KEY_GLOBAL_SETTING_USER_NAME = "stash2slack.globalsettings.username";
-    private static final String KEY_GLOBAL_SETTING_ICON_URL = "stash2slack.globalsettings.iconurl";
-    private static final String KEY_GLOBAL_SETTING_ICON_EMOJI = "stash2slack.globalsettings.iconemojil";
+public class DefaultGlobalChatworkSettingsService implements ChatworkGlobalSettingsService {
+    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "bitbucketserver2chatwork.globalsettings.hookurl";
+    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "bitbucketserver2chatwork.globalsettings.channelname";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsreopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsupdatedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsunapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsdeclinedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsmergedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationscommentedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "bitbucketserver2chatwork.globalsettings.chatworknotificationslevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "bitbucketserver2chatwork.globalsettings.chatworknotificationsprlevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationspushenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationspersonalenabled";
+    private static final String KEY_GLOBAL_SETTING_USER_NAME = "bitbucketserver2chatwork.globalsettings.username";
+    private static final String KEY_GLOBAL_SETTING_ICON_URL = "bitbucketserver2chatwork.globalsettings.iconurl";
+    private static final String KEY_GLOBAL_SETTING_ICON_EMOJI = "bitbucketserver2chatwork.globalsettings.iconemojil";
 
     private final PluginSettings pluginSettings;
 
-    public DefaultGlobalSlackSettingsService(PluginSettingsFactory pluginSettingsFactory) {
+    public DefaultGlobalChatworkSettingsService(PluginSettingsFactory pluginSettingsFactory) {
         this.pluginSettings = pluginSettingsFactory.createGlobalSettings();
     }
 
@@ -60,112 +60,112 @@ public class DefaultGlobalSlackSettingsService implements SlackGlobalSettingsSer
     }
 
     @Override
-    public boolean getSlackNotificationsEnabled() {
+    public boolean getChatworkNotificationsEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsEnabled(boolean value) {
+    public void setChatworkNotificationsEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsOpenedEnabled() {
+    public boolean getChatworkNotificationsOpenedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsOpenedEnabled(boolean value) {
+    public void setChatworkNotificationsOpenedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsReopenedEnabled() {
+    public boolean getChatworkNotificationsReopenedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsReopenedEnabled(boolean value) {
+    public void setChatworkNotificationsReopenedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsUpdatedEnabled() {
+    public boolean getChatworkNotificationsUpdatedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsUpdatedEnabled(boolean value) {
+    public void setChatworkNotificationsUpdatedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsApprovedEnabled() {
+    public boolean getChatworkNotificationsApprovedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsApprovedEnabled(boolean value) {
+    public void setChatworkNotificationsApprovedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsUnapprovedEnabled() {
+    public boolean getChatworkNotificationsUnapprovedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsUnapprovedEnabled(boolean value) {
+    public void setChatworkNotificationsUnapprovedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsDeclinedEnabled() {
+    public boolean getChatworkNotificationsDeclinedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsDeclinedEnabled(boolean value) {
+    public void setChatworkNotificationsDeclinedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsMergedEnabled() {
+    public boolean getChatworkNotificationsMergedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsMergedEnabled(boolean value) {
+    public void setChatworkNotificationsMergedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsCommentedEnabled() {
+    public boolean getChatworkNotificationsCommentedEnabled() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsCommentedEnabled(boolean value) {
+    public void setChatworkNotificationsCommentedEnabled(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsEnabledForPush() {
+    public boolean getChatworkNotificationsEnabledForPush() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsEnabledForPush(boolean value) {
+    public void setChatworkNotificationsEnabledForPush(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED, value);
     }
 
     @Override
-    public boolean getSlackNotificationsEnabledForPersonal() {
+    public boolean getChatworkNotificationsEnabledForPersonal() {
         return getBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED);
     }
 
     @Override
-    public void setSlackNotificationsEnabledForPersonal(boolean value) {
+    public void setChatworkNotificationsEnabledForPersonal(boolean value) {
         setBoolean(KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED, value);
     }
 

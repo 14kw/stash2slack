@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-
-    <bean id="slackSettingsService"
-          class="com.pragbits.bitbucketserver.DefaultSlackSettingsService">
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    <bean id="chatworkSettingsService" class="com.pragbits.bitbucketserver.DefaultChatworkSettingsService">
         <constructor-arg index="0" ref="pluginSettingsFactory"/>
         <constructor-arg index="1" ref="permissionValidationService"/>
     </bean>
-
-    <bean id="slackGlobalSettingsService"
-          class="com.pragbits.bitbucketserver.DefaultGlobalSlackSettingsService">
+    <bean id="chatworkGlobalSettingsService" class="com.pragbits.bitbucketserver.DefaultGlobalChatworkSettingsService">
         <constructor-arg index="0" ref="pluginSettingsFactory"/>
     </bean>
-
-    <bean id="slackNotifier" class="com.pragbits.bitbucketserver.tools.SlackNotifier">
-    </bean>
-
+    <bean id="chatworkNotifier" class="com.pragbits.bitbucketserver.tools.ChatworkNotifier"></bean>
 </beans>

@@ -1,48 +1,48 @@
 package com.pragbits.bitbucketserver.tools;
 
 import com.atlassian.bitbucket.repository.Repository;
-import com.pragbits.bitbucketserver.ImmutableSlackSettings;
-import com.pragbits.bitbucketserver.SlackGlobalSettingsService;
-import com.pragbits.bitbucketserver.SlackSettings;
-import com.pragbits.bitbucketserver.SlackSettingsService;
+import com.pragbits.bitbucketserver.ImmutableChatworkSettings;
+import com.pragbits.bitbucketserver.ChatworkGlobalSettingsService;
+import com.pragbits.bitbucketserver.ChatworkSettings;
+import com.pragbits.bitbucketserver.ChatworkSettingsService;
 
 public class SettingsSelector {
 
-    private SlackGlobalSettingsService slackGlobalSettingsService;
-    private SlackSettings slackSettings;
-    private SlackSettings resolvedSlackSettings;
+    private ChatworkGlobalSettingsService chatworkGlobalSettingsService;
+    private ChatworkSettings chatworkSettings;
+    private ChatworkSettings resolvedChatworkSettings;
 
-    public SettingsSelector(SlackSettingsService slackSettingsService, SlackGlobalSettingsService slackGlobalSettingsService, Repository repository) {
-        this.slackGlobalSettingsService = slackGlobalSettingsService;
-        this.slackSettings = slackSettingsService.getSlackSettings(repository);
-        this.setResolvedSlackSettings();
+    public SettingsSelector(ChatworkSettingsService chatworkSettingsService, ChatworkGlobalSettingsService chatworkGlobalSettingsService, Repository repository) {
+        this.chatworkGlobalSettingsService = chatworkGlobalSettingsService;
+        this.chatworkSettings = chatworkSettingsService.getChatworkSettings(repository);
+        this.setResolvedChatworkSettings();
     }
 
-    public SlackSettings getResolvedSlackSettings() {
-        return this.resolvedSlackSettings;
+    public ChatworkSettings getResolvedChatworkSettings() {
+        return this.resolvedChatworkSettings;
     }
 
-    private void setResolvedSlackSettings() {
-        resolvedSlackSettings = new ImmutableSlackSettings(
-                slackSettings.isSlackNotificationsOverrideEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsEnabled() : slackGlobalSettingsService.getSlackNotificationsEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsOpenedEnabled() : slackGlobalSettingsService.getSlackNotificationsOpenedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsReopenedEnabled() : slackGlobalSettingsService.getSlackNotificationsReopenedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsUpdatedEnabled() : slackGlobalSettingsService.getSlackNotificationsUpdatedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsApprovedEnabled() : slackGlobalSettingsService.getSlackNotificationsApprovedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsUnapprovedEnabled() : slackGlobalSettingsService.getSlackNotificationsUnapprovedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsDeclinedEnabled() : slackGlobalSettingsService.getSlackNotificationsDeclinedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsMergedEnabled() : slackGlobalSettingsService.getSlackNotificationsMergedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsCommentedEnabled() : slackGlobalSettingsService.getSlackNotificationsCommentedEnabled(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsEnabledForPush() : slackGlobalSettingsService.getSlackNotificationsEnabledForPush(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.isSlackNotificationsEnabledForPersonal() : slackGlobalSettingsService.getSlackNotificationsEnabledForPersonal(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getNotificationLevel() : slackGlobalSettingsService.getNotificationLevel(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getNotificationPrLevel() : slackGlobalSettingsService.getNotificationPrLevel(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackChannelName() : slackGlobalSettingsService.getChannelName(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackWebHookUrl() : slackGlobalSettingsService.getWebHookUrl(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackUsername() : slackGlobalSettingsService.getUsername(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackIconUrl() : slackGlobalSettingsService.getIconUrl(),
-                slackSettings.isSlackNotificationsOverrideEnabled() ? slackSettings.getSlackIconEmoji() : slackGlobalSettingsService.getIconEmoji()
+    private void setResolvedChatworkSettings() {
+        resolvedChatworkSettings = new ImmutableChatworkSettings(
+                chatworkSettings.isChatworkNotificationsOverrideEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsOpenedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsOpenedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsReopenedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsReopenedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsUpdatedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsUpdatedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsApprovedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsApprovedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsUnapprovedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsUnapprovedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsDeclinedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsDeclinedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsMergedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsMergedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsCommentedEnabled() : chatworkGlobalSettingsService.getChatworkNotificationsCommentedEnabled(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsEnabledForPush() : chatworkGlobalSettingsService.getChatworkNotificationsEnabledForPush(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.isChatworkNotificationsEnabledForPersonal() : chatworkGlobalSettingsService.getChatworkNotificationsEnabledForPersonal(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getNotificationLevel() : chatworkGlobalSettingsService.getNotificationLevel(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getNotificationPrLevel() : chatworkGlobalSettingsService.getNotificationPrLevel(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getChatworkChannelName() : chatworkGlobalSettingsService.getChannelName(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getChatworkWebHookUrl() : chatworkGlobalSettingsService.getWebHookUrl(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getChatworkUsername() : chatworkGlobalSettingsService.getUsername(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getChatworkIconUrl() : chatworkGlobalSettingsService.getIconUrl(),
+                chatworkSettings.isChatworkNotificationsOverrideEnabled() ? chatworkSettings.getChatworkIconEmoji() : chatworkGlobalSettingsService.getIconEmoji()
         );
     }
 

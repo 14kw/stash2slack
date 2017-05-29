@@ -2,7 +2,7 @@ package com.pragbits.bitbucketserver.tools;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SlackAttachment {
+public class ChatworkAttachment {
 
     private String[] mrkdwn_in = new String[]{
             "pretext",
@@ -60,8 +60,8 @@ public class SlackAttachment {
         this.color = color;
     }
 
-    public void addField(SlackAttachmentField slackAttachmentField) {
-        this.fields.add(slackAttachmentField);
+    public void addField(ChatworkAttachmentField chatworkAttachmentField) {
+        this.fields.add(chatworkAttachmentField);
     }
 
     public void removeField(int index) {
@@ -69,7 +69,7 @@ public class SlackAttachment {
     }
 
 
-    private List<SlackAttachmentField> fields = new LinkedList<SlackAttachmentField>();
+    private List<ChatworkAttachmentField> fields = new LinkedList<ChatworkAttachmentField>();
 
     public String getTitle() {
         return title;

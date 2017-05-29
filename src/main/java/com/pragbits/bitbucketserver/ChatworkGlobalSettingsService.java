@@ -1,6 +1,6 @@
 package com.pragbits.bitbucketserver;
 
-public interface SlackGlobalSettingsService {
+public interface ChatworkGlobalSettingsService {
 
     // hook and channel name
     String getWebHookUrl();
@@ -10,36 +10,36 @@ public interface SlackGlobalSettingsService {
     void setChannelName(String value);
 
     // pull requests are enabled and pr events
-    boolean getSlackNotificationsEnabled();
-    void setSlackNotificationsEnabled(boolean value);
+    boolean getChatworkNotificationsEnabled();
+    void setChatworkNotificationsEnabled(boolean value);
 
-    boolean getSlackNotificationsOpenedEnabled();
-    void setSlackNotificationsOpenedEnabled(boolean value);
+    boolean getChatworkNotificationsOpenedEnabled();
+    void setChatworkNotificationsOpenedEnabled(boolean value);
 
-    boolean getSlackNotificationsReopenedEnabled();
-    void setSlackNotificationsReopenedEnabled(boolean value);
+    boolean getChatworkNotificationsReopenedEnabled();
+    void setChatworkNotificationsReopenedEnabled(boolean value);
 
-    boolean getSlackNotificationsUpdatedEnabled();
-    void setSlackNotificationsUpdatedEnabled(boolean value);
+    boolean getChatworkNotificationsUpdatedEnabled();
+    void setChatworkNotificationsUpdatedEnabled(boolean value);
 
-    boolean getSlackNotificationsApprovedEnabled();
-    void setSlackNotificationsApprovedEnabled(boolean value);
+    boolean getChatworkNotificationsApprovedEnabled();
+    void setChatworkNotificationsApprovedEnabled(boolean value);
 
-    boolean getSlackNotificationsUnapprovedEnabled();
-    void setSlackNotificationsUnapprovedEnabled(boolean value);
+    boolean getChatworkNotificationsUnapprovedEnabled();
+    void setChatworkNotificationsUnapprovedEnabled(boolean value);
 
-    boolean getSlackNotificationsDeclinedEnabled();
-    void setSlackNotificationsDeclinedEnabled(boolean value);
+    boolean getChatworkNotificationsDeclinedEnabled();
+    void setChatworkNotificationsDeclinedEnabled(boolean value);
 
-    boolean getSlackNotificationsMergedEnabled();
-    void setSlackNotificationsMergedEnabled(boolean value);
+    boolean getChatworkNotificationsMergedEnabled();
+    void setChatworkNotificationsMergedEnabled(boolean value);
 
-    boolean getSlackNotificationsCommentedEnabled();
-    void setSlackNotificationsCommentedEnabled(boolean value);
+    boolean getChatworkNotificationsCommentedEnabled();
+    void setChatworkNotificationsCommentedEnabled(boolean value);
 
     // push notifications are enabled and push options
-    boolean getSlackNotificationsEnabledForPush();
-    void setSlackNotificationsEnabledForPush(boolean value);
+    boolean getChatworkNotificationsEnabledForPush();
+    void setChatworkNotificationsEnabledForPush(boolean value);
 
     NotificationLevel getNotificationLevel();
     void setNotificationLevel(String value);
@@ -47,8 +47,8 @@ public interface SlackGlobalSettingsService {
     NotificationLevel getNotificationPrLevel();
     void setNotificationPrLevel(String value);
 
-    boolean getSlackNotificationsEnabledForPersonal();
-    void setSlackNotificationsEnabledForPersonal(boolean value);
+    boolean getChatworkNotificationsEnabledForPersonal();
+    void setChatworkNotificationsEnabledForPersonal(boolean value);
 
     String getUsername();
     void setUsername(String value);

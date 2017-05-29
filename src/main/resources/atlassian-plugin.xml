@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <atlassian-plugin key="com.pragbits.stash.${project.artifactId}" name="${project.name}" plugins-version="2">
-
   <plugin-info>
     <description>${project.description}</description>
     <version>${project.version}</version>
     <vendor name="${project.organization.name}" url="${project.organization.url}"/>
     <param name="plugin-icon">images/pluginIcon.png</param>
     <param name="plugin-logo">images/pluginLogo.png</param>
-
-      <permissions>
-          <permission>execute_java</permission>
-      </permissions>
-
+    <permissions>
+      <permission>execute_java</permission>
+    </permissions>
   </plugin-info>
   <!-- add our web resources -->
   <web-resource key="slash2stack-resources" name="slash2stack Web Resources">
@@ -20,40 +16,29 @@
     <resource type="download" name="images/" location="/images"/>
     <context>slash2stack</context>
   </web-resource>
-  
-  <component key="pull-request-activity-listener" class="com.pragbits.bitbucketserver.components.PullRequestActivityListener">
-  </component>
-
-  <component key="push-activity-listener" class="com.pragbits.bitbucketserver.components.RepositoryPushActivityListener">
-  </component>
-
-  <resource type="i18n" name="i18n" location="i18n/stash2slack"/>
-  
+  <component key="pull-request-activity-listener" class="com.pragbits.bitbucketserver.components.PullRequestActivityListener"></component>
+  <component key="push-activity-listener" class="com.pragbits.bitbucketserver.components.RepositoryPushActivityListener"></component>
+  <resource type="i18n" name="i18n" location="i18n/bitbucketserver2chatwork"/>
   <client-resource key="soy-templates">
-   <directory location="/static/">
-    <include>/**/*.soy</include>
-   </directory>
-   <dependency>com.atlassian.bitbucket.server.bitbucket-web:server-soy-templates</dependency>
+    <directory location="/static/">
+      <include>/**/*.soy</include>
+    </directory>
+    <dependency>com.atlassian.bitbucket.server.bitbucket-web:server-soy-templates</dependency>
   </client-resource>
-
-  <web-item key="repository-settings-slack-settings" weight="30" section="bitbucket.repository.settings.panel/repository-settings-addons-section">
-   <label key="bitbucket.server.web.repository.settings.tab.slack.settings">Slack settings</label>
-   <tooltip key="bitbucket.web.repository.settings.tab.slack.settings.tooltip">Configure whether you want slack notifications</tooltip>
-   <link>${navBuilder.pluginServlets().path('slack-settings', 'projects', $project.key, 'repos', $repository.slug).buildRelNoContext()}</link>
+  <web-item key="repository-settings-chatwork-settings" weight="30" section="bitbucket.repository.settings.panel/repository-settings-addons-section">
+    <label key="bitbucket.server.web.repository.settings.tab.chatwork.settings">Chatwork settings</label>
+    <tooltip key="bitbucket.web.repository.settings.tab.chatwork.settings.tooltip">Configure whether you want chatwork notifications</tooltip>
+    <link>${navBuilder.pluginServlets().path('chatwork-settings', 'projects', $project.key, 'repos', $repository.slug).buildRelNoContext()}</link>
   </web-item>
-
-  <web-item key="global-settings-slack-settings" weight="30" section="atl.admin/admin-settings-section">
-   <label key="bitbucket.server.web.admin.settings.tab.slack.admin.settings">Bitbucket Server 2 Slack settings</label>
-   <tooltip key="bitbucket.web.admin.settings.tab.slack.admin.settings.tooltip">Configure global settings for slack notifications</tooltip>
-   <link>/plugins/servlet/slack-global-settings/admin</link>
+  <web-item key="global-settings-chatwork-settings" weight="30" section="atl.admin/admin-settings-section">
+    <label key="bitbucket.server.web.admin.settings.tab.chatwork.admin.settings">Bitbucket Server 2 Chatwork settings</label>
+    <tooltip key="bitbucket.web.admin.settings.tab.chatwork.admin.settings.tooltip">Configure global settings for chatwork notifications</tooltip>
+    <link>/plugins/servlet/chatwork-global-settings/admin</link>
   </web-item>
-
-  <servlet key="slack-settings-servlet" class="com.pragbits.bitbucketserver.SlackSettingsServlet">
-   <url-pattern>/slack-settings/*</url-pattern>
+  <servlet key="chatwork-settings-servlet" class="com.pragbits.bitbucketserver.ChatworkSettingsServlet">
+    <url-pattern>/chatwork-settings/*</url-pattern>
   </servlet>
-
-  <servlet key="slack-global-settings-servlet" class="com.pragbits.bitbucketserver.SlackGlobalSettingsServlet">
-   <url-pattern>/slack-global-settings/admin</url-pattern>
+  <servlet key="chatwork-global-settings-servlet" class="com.pragbits.bitbucketserver.ChatworkGlobalSettingsServlet">
+    <url-pattern>/chatwork-global-settings/admin</url-pattern>
   </servlet>
-
 </atlassian-plugin>

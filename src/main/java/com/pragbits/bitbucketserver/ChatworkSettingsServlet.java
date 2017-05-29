@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-public class SlackSettingsServlet extends HttpServlet {
+public class ChatworkSettingsServlet extends HttpServlet {
     private final PageBuilderService pageBuilderService;
-    private final SlackSettingsService slackSettingsService;
+    private final ChatworkSettingsService chatworkSettingsService;
     private final RepositoryService repositoryService;
     private final SoyTemplateRenderer soyTemplateRenderer;
     private final PermissionValidationService validationService;
@@ -30,14 +30,14 @@ public class SlackSettingsServlet extends HttpServlet {
     
     private Repository repository = null;
 
-    public SlackSettingsServlet(PageBuilderService pageBuilderService,
-                                    SlackSettingsService slackSettingsService,
+    public ChatworkSettingsServlet(PageBuilderService pageBuilderService,
+                                    ChatworkSettingsService chatworkSettingsService,
                                     RepositoryService repositoryService,
                                     SoyTemplateRenderer soyTemplateRenderer,
                                     PermissionValidationService validationService,
                                     I18nService i18nService) {
         this.pageBuilderService = pageBuilderService;
-        this.slackSettingsService = slackSettingsService;
+        this.chatworkSettingsService = chatworkSettingsService;
         this.repositoryService = repositoryService;
         this.soyTemplateRenderer = soyTemplateRenderer;
         this.validationService = validationService;
@@ -57,37 +57,37 @@ public class SlackSettingsServlet extends HttpServlet {
         }
 
         NotificationLevel notificationLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationLevel")) {
-            notificationLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationLevel"));
+        if (null != req.getParameter("chatworkNotificationLevel")) {
+            notificationLevel = NotificationLevel.valueOf(req.getParameter("chatworkNotificationLevel"));
         }
 
         NotificationLevel notificationPrLevel = NotificationLevel.VERBOSE;
-        if (null != req.getParameter("slackNotificationPrLevel")) {
-            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("slackNotificationPrLevel"));
+        if (null != req.getParameter("chatworkNotificationPrLevel")) {
+            notificationPrLevel = NotificationLevel.valueOf(req.getParameter("chatworkNotificationPrLevel"));
         }
 
-        slackSettingsService.setSlackSettings(
+        chatworkSettingsService.setChatworkSettings(
                 repository,
-                new ImmutableSlackSettings(
-                        "on".equals(req.getParameter("slackNotificationsOverrideEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsOpenedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsReopenedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsUpdatedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsApprovedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsUnapprovedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsDeclinedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsMergedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsCommentedEnabled")),
-                        "on".equals(req.getParameter("slackNotificationsEnabledForPush")),
-                        "on".equals(req.getParameter("slackNotificationsEnabledForPersonal")),
+                new ImmutableChatworkSettings(
+                        "on".equals(req.getParameter("chatworkNotificationsOverrideEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsOpenedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsReopenedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsUpdatedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsApprovedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsUnapprovedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsDeclinedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsMergedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsCommentedEnabled")),
+                        "on".equals(req.getParameter("chatworkNotificationsEnabledForPush")),
+                        "on".equals(req.getParameter("chatworkNotificationsEnabledForPersonal")),
                         notificationLevel,
                         notificationPrLevel,
-                        req.getParameter("slackChannelName"),
-                        req.getParameter("slackWebHookUrl").trim(),
-                        req.getParameter("slackUsername").trim(),
-                        req.getParameter("slackIconUrl").trim(),
-                        req.getParameter("slackIconEmoji").trim()
+                        req.getParameter("chatworkChannelName"),
+                        req.getParameter("chatworkWebHookUrl").trim(),
+                        req.getParameter("chatworkUsername").trim(),
+                        req.getParameter("chatworkIconUrl").trim(),
+                        req.getParameter("chatworkIconEmoji").trim()
                 )
         );
 
@@ -122,12 +122,12 @@ public class SlackSettingsServlet extends HttpServlet {
     private void doView(Repository repository, HttpServletResponse response)
             throws ServletException, IOException {
         validationService.validateForRepository(repository, Permission.REPO_ADMIN);
-        SlackSettings slackSettings = slackSettingsService.getSlackSettings(repository);
+        ChatworkSettings chatworkSettings = chatworkSettingsService.getChatworkSettings(repository);
         render(response,
-                "bitbucketserver.page.slack.settings.viewSlackSettings",
+                "bitbucketserver.page.chatwork.settings.viewChatworkSettings",
                 ImmutableMap.<String, Object>builder()
                         .put("repository", repository)
-                        .put("slackSettings", slackSettings)
+                        .put("chatworkSettings", chatworkSettings)
                         .put("notificationLevels", new SelectFieldOptions(NotificationLevel.values()).toSoyStructure())
                         .build()
         );
@@ -135,7 +135,7 @@ public class SlackSettingsServlet extends HttpServlet {
 
     private void render(HttpServletResponse response, String templateName, Map<String, Object> data)
             throws IOException, ServletException {
-        pageBuilderService.assembler().resources().requireContext("plugin.page.slack");
+        pageBuilderService.assembler().resources().requireContext("plugin.page.chatwork");
         response.setContentType("text/html;charset=UTF-8");
         try {
             soyTemplateRenderer.render(response.getWriter(), PluginMetadata.getCompleteModuleKey("soy-templates"), templateName, data);

@@ -3,12 +3,12 @@ package com.pragbits.bitbucketserver;
 import com.atlassian.bitbucket.repository.Repository;
 import javax.annotation.Nonnull;
 
-public interface SlackSettingsService {
+public interface ChatworkSettingsService {
 
     @Nonnull
-    SlackSettings getSlackSettings(@Nonnull Repository repository);
+    ChatworkSettings getChatworkSettings(@Nonnull Repository repository);
 
     @Nonnull
-    SlackSettings setSlackSettings(@Nonnull Repository repository, @Nonnull SlackSettings settings);
+    ChatworkSettings setChatworkSettings(@Nonnull Repository repository, @Nonnull ChatworkSettings settings);
 
 }

@@ -3,7 +3,7 @@ package com.pragbits.bitbucketserver.tools;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SlackPayload {
+public class ChatworkPayload {
 
     public String getChannel() {
         return channel;
@@ -45,10 +45,10 @@ public class SlackPayload {
 
     private boolean link_names;
 
-    private List<SlackAttachment> attachments = new LinkedList<SlackAttachment>();
+    private List<ChatworkAttachment> attachments = new LinkedList<ChatworkAttachment>();
 
-    public void addAttachment(SlackAttachment slackAttachment) {
-        this.attachments.add(slackAttachment);
+    public void addAttachment(ChatworkAttachment chatworkAttachment) {
+        this.attachments.add(chatworkAttachment);
     }
 
     public void removeAttachment(int index) {
