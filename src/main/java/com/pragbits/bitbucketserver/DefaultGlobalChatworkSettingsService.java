@@ -6,24 +6,24 @@ import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.google.common.base.Strings;
 
 public class DefaultGlobalChatworkSettingsService implements ChatworkGlobalSettingsService {
-    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "bitbucketserver2chatwork.globalsettings.hookurl";
-    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "bitbucketserver2chatwork.globalsettings.channelname";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsreopenedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsupdatedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsunapprovedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsdeclinedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationsmergedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationscommentedenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "bitbucketserver2chatwork.globalsettings.chatworknotificationslevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "bitbucketserver2chatwork.globalsettings.chatworknotificationsprlevel";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationspushenabled";
-    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED = "bitbucketserver2chatwork.globalsettings.chatworknotificationspersonalenabled";
-    private static final String KEY_GLOBAL_SETTING_USER_NAME = "bitbucketserver2chatwork.globalsettings.username";
-    private static final String KEY_GLOBAL_SETTING_ICON_URL = "bitbucketserver2chatwork.globalsettings.iconurl";
-    private static final String KEY_GLOBAL_SETTING_ICON_EMOJI = "bitbucketserver2chatwork.globalsettings.iconemojil";
+    private static final String KEY_GLOBAL_SETTING_HOOK_URL = "stash2chatwork.globalsettings.hookurl";
+    private static final String KEY_GLOBAL_SETTING_CHANNEL_NAME = "stash2chatwork.globalsettings.channelname";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_OPENED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_REOPENED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsreopenedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UPDATED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsupdatedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_APPROVED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_UNAPPROVED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsunapprovedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_DECLINED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsdeclinedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_MERGED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationsmergedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_COMMENTED_ENABLED = "stash2chatwork.globalsettings.chatworknotificationscommentedenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_LEVEL = "stash2chatwork.globalsettings.chatworknotificationslevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PR_LEVEL = "stash2chatwork.globalsettings.chatworknotificationsprlevel";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PUSH_ENABLED = "stash2chatwork.globalsettings.chatworknotificationspushenabled";
+    private static final String KEY_GLOBAL_SETTING_NOTIFICATIONS_PERSONAL_ENABLED = "stash2chatwork.globalsettings.chatworknotificationspersonalenabled";
+    private static final String KEY_GLOBAL_SETTING_USER_NAME = "stash2chatwork.globalsettings.username";
+    private static final String KEY_GLOBAL_SETTING_ICON_URL = "stash2chatwork.globalsettings.iconurl";
+    private static final String KEY_GLOBAL_SETTING_ICON_EMOJI = "stash2chatwork.globalsettings.iconemojil";
 
     private final PluginSettings pluginSettings;
 

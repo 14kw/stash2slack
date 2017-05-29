@@ -12,12 +12,12 @@
         <meta name="projectKey" content="{$repository.project.key}">
         <meta name="repositorySlug" content="{$repository.slug}">
         <meta name="activeTab" content="repository-settings-chatwork-settings">
-        <title>{{getText('bitbucketserver2chatwork.local.settings.chatwork.title', $repository.project.name, $repository.name)}}</title>
+        <title>{{getText('stash2chatwork.local.settings.chatwork.title', $repository.project.name, $repository.name)}}</title>
     </head>
     <body>
         {call widget.aui.pageHeader}
             {param content}
-                <h2>{getText('bitbucketserver2chatwork.local.settings.heading')}</h2>
+                <h2>{getText('stash2chatwork.local.settings.heading')}</h2>
             {/param}
         {/call}
         {call widget.aui.form.form}
@@ -26,23 +26,23 @@
 
                 {call widget.aui.form.checkbox}
                     {param id: 'chatworkNotificationsOverrideEnabled' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.override.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.override.label') /}
                     {param checked: $chatworkSettings.chatworkNotificationsOverrideEnabled /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.override.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.override.description') /}
                 {/call}
 
                 <h4>Pull request notifications</h4>
 
                 {call widget.aui.form.checkbox}
                     {param id: 'chatworkNotificationsEnabled' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.enabled.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.enabled.label') /}
                     {param checked: $chatworkSettings.chatworkNotificationsEnabled /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.enabled.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.enabled.description') /}
                 {/call}
 
                 {call aui.form.selectField}
                     {param id: 'chatworkNotificationPrLevel' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.notification.pr.level.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.notification.pr.level.label') /}
                     {param value: $chatworkSettings.notificationPrLevel /}
                     {param options: $notificationLevels /}
                 {/call}
@@ -52,51 +52,51 @@
                     <p>Filter pull request events based on activity types</p>
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsOpenedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.opened.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.opened.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsOpenedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.opened.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.opened.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsReopenedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.reopened.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.reopened.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsReopenedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.settings.chatwork.reopened.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.settings.chatwork.reopened.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsUpdatedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.updated.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.updated.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsUpdatedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.updated.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.updated.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsApprovedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.approved.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.approved.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsApprovedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.approved.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.approved.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsUnapprovedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.unapproved.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.unapproved.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsUnapprovedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.unapproved.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.unapproved.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsDeclinedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.declined.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.declined.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsDeclinedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.declined.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.declined.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsMergedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.merged.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.merged.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsMergedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.merged.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.merged.enabled.description') /}
                     {/call}
                     {call widget.aui.form.checkbox}
                         {param id: 'chatworkNotificationsCommentedEnabled' /}
-                        {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.commented.enabled.label') /}
+                        {param labelContent: getText('stash2chatwork.local.settings.chatwork.commented.enabled.label') /}
                         {param checked: $chatworkSettings.chatworkNotificationsCommentedEnabled /}
-                        {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.commented.enabled.description') /}
+                        {param description: getText('stash2chatwork.local.settings.chatwork.commented.enabled.description') /}
                     {/call}
                 </div>
 
@@ -104,13 +104,13 @@
 
                 {call widget.aui.form.checkbox}
                     {param id: 'chatworkNotificationsEnabledForPush' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.push.enabled.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.push.enabled.label') /}
                     {param checked: $chatworkSettings.chatworkNotificationsEnabledForPush /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.push.enabled.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.push.enabled.description') /}
                 {/call}
                 {call aui.form.selectField}
                     {param id: 'chatworkNotificationLevel' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.notification.level.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.notification.level.label') /}
                     {param value: $chatworkSettings.notificationLevel /}
                     {param options: $notificationLevels /}
                 {/call}
@@ -119,44 +119,44 @@
 
                 {call widget.aui.form.checkbox}
                     {param id: 'chatworkNotificationsEnabledForPersonal' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.personal.enabled.label') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.personal.enabled.label') /}
                     {param checked: $chatworkSettings.chatworkNotificationsEnabledForPersonal /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.personal.enabled.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.personal.enabled.description') /}
                 {/call}
 
 
                 <h4>Channel and hook overrides</h4>
                 {call widget.aui.form.text}
                     {param id: 'chatworkChannelName' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.channel') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.channel') /}
                     {param initialValue: $chatworkSettings.chatworkChannelName /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.channel.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.channel.description') /}
                 {/call}
                 {call widget.aui.form.text}
                     {param id: 'chatworkWebHookUrl' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.webhookurl') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.webhookurl') /}
                     {param initialValue: $chatworkSettings.chatworkWebHookUrl /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.webhookurl.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.webhookurl.description') /}
                 {/call}
 
                 <h4>Additional configuration</h4>
                 {call widget.aui.form.text}
                     {param id: 'chatworkUsername' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.username') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.username') /}
                     {param initialValue: $chatworkSettings.chatworkUsername /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.username.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.username.description') /}
                 {/call}
                 {call widget.aui.form.text}
                     {param id: 'chatworkIconUrl' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.iconurl') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.iconurl') /}
                     {param initialValue: $chatworkSettings.chatworkIconUrl /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.iconurl.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.iconurl.description') /}
                 {/call}
                 {call widget.aui.form.text}
                     {param id: 'chatworkIconEmoji' /}
-                    {param labelContent: getText('bitbucketserver2chatwork.local.settings.chatwork.iconemoji') /}
+                    {param labelContent: getText('stash2chatwork.local.settings.chatwork.iconemoji') /}
                     {param initialValue: $chatworkSettings.chatworkIconEmoji /}
-                    {param description: getText('bitbucketserver2chatwork.local.settings.chatwork.iconemoji.description') /}
+                    {param description: getText('stash2chatwork.local.settings.chatwork.iconemoji.description') /}
                 {/call}
 
 
@@ -164,7 +164,7 @@
                     {param content}
                         {call aui.form.submit}
                             {param id: 'bitbucketserver.web.chatwork.settings.submit' /}
-                            {param text: getText('bitbucketserver2chatwork.local.settings.submit') /}
+                            {param text: getText('stash2chatwork.local.settings.submit') /}
                             {param type: 'submit' /}
                         {/call}
                     {/param}

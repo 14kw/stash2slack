@@ -18,7 +18,7 @@
   </web-resource>
   <component key="pull-request-activity-listener" class="com.pragbits.bitbucketserver.components.PullRequestActivityListener"></component>
   <component key="push-activity-listener" class="com.pragbits.bitbucketserver.components.RepositoryPushActivityListener"></component>
-  <resource type="i18n" name="i18n" location="i18n/bitbucketserver2chatwork"/>
+  <resource type="i18n" name="i18n" location="i18n/stash2chatwork"/>
   <client-resource key="soy-templates">
     <directory location="/static/">
       <include>/**/*.soy</include>
