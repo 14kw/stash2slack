@@ -23,4 +23,4 @@ phases:
 artifacts:
   type: zip
   files:
-    - target/bitbucketserver2chatwork-2.0.7.jar
+    - target/stash2chatwork-2.0.7.jar
