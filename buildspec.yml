@@ -25,4 +25,3 @@ artifacts:
   files:
     - target/stash2chatwork-2.0.7.jar
   discard-paths: yes
-  base-directory: location
